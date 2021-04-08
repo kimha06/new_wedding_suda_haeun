@@ -8,7 +8,7 @@
 		insert into ws_member values(
 		#{userid},#{name},#{sex},#{nickName},#{pwd},#{mobile},#{email},
 		#{cusEnter},#{chuchon},#{businessTy},#{com_name},#{com_tel},
-		#{sdong},sysdate)
+		#{sdong},sysdate,0)
   </insert>
   
   

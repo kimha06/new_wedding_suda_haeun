@@ -35,4 +35,9 @@ public class MemberController {
 		return "/member/login";
 	}
 	
+	@RequestMapping("/member/joinComplete")
+	public String joinComplete() {
+		return "/member/joinComplete";
+	}
+	
 }//class

@@ -11,8 +11,7 @@
 		<c:choose>
 			<c:when test="${check == 1}">
 				<script type="text/javascript">
-					alert("회원가입을 축하합니다!");
-					location.href='/member/login';
+					location.href='/member/joinComplete';
 				</script>	
 			</c:when>
 			<c:otherwise>

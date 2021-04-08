@@ -23,6 +23,7 @@ public class MemberDto {
 	private String com_tel;
 	private String sdong;
 	private String sign_up_date;
+	private int point;
 	
 	
 	
