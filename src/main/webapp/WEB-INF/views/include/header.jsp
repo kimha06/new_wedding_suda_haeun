@@ -163,7 +163,7 @@ function logout()
                     <span><img src="/images/m_blog.jpg"></span>
                 </div>
                 <div class="main_favor_inbx">
-                    <span><a href="javascript:login();">로그인</a></span>
+                    <span><a href="/member/login">로그인</a></span>
 						<span>|</span>
 						<span><a href="/member/join">회원가입</a></span>
 					

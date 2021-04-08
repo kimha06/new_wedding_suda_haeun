@@ -88,13 +88,21 @@
 		<div data-u="prototype" style="width: 16px; height: 16px; position: absolute; left: 0px; top: 0px;" class="av"></div></div><span data-u="arrowleft" class="jssora22l" style="top: 142px; left: 12px; width: 40px; height: 58px; display: none;" data-autocenter="2"></span><span data-u="arrowright" class="jssora22r" style="top: 142px; right: 12px; width: 40px; height: 58px; display: none;" data-autocenter="2"></span></div></div></div>
 
 
+
+
+
+
+
+
+
+
 <div class="m_bx_wrap">
      
 <div class="sub_link_box">
 	<div class="sub_link_menu">
 		
-		<span id="sub_Color_f"><a href="/membership/log_in.asp">로그인</a></span>
-		<span id="sub_Color_f" class="sub_under_bar"><a href="/member/join">회원가입</a></span>
+		<span id="sub_Color_f" class="sub_under_bar"><a href="/member/login">로그인</a></span>
+		<span id="sub_Color_f"><a href="/membership/member.asp">회원가입</a></span>
 		<span id="sub_Color_f"><a href="/membership/find_id.asp">ID/PW찾기</a></span>
 		
 		<span id="sub_Color_f"><a href="/membership/use_it.asp">이용약관 및 개인정보취급방침</a></span>
@@ -102,573 +110,191 @@
 		<span id="sub_Color_f" ><a href="/membership/de_email.asp">이메일무단수집거부</a></span>//-->
 	</div>
  </div>
-<script language="javascript">
-$(document).ready(function() {	
-	$('#id_button').click(function() {	
-		var userid = $('#userid').val();	
-		var idPtn = /^[a-zA-Z0-9]{6,15}$/;
-		if(idPtn.test(userid) != true){
-			alert("아이디를 형식에 맞게 입력해 주세요!");
-			return false;
-		}
-		if (userid == "")
-		{
-			alert("아이디를 입력하세요");
-			$('#userid').focus();
-			return false;					
-		}		
-		if (userid.length < 6 || userid.length > 15)
-		{
-			alert("아이디는 6자이상 15자이하를 사용할 수 있습니다.");
-			$('#userid').val('');
-			$('#userid').focus();
-			return false;	
-		}
-		$.ajax({
-			type:"post"
-			, url:"member_id.asp"
-			, data:{userid: userid}				
-			, success: function(return_data) {				
-				var return_data_arry = return_data.split("㉬");
-				var use_yn = return_data_arry[0];				
-				var use_ment = return_data_arry[1];
-				if (use_yn == "Y")
-				{
-					alert("["+userid+"] "+use_ment);
-					$('#useridClick').val("Y");
-					$('#name').focus();
-				}
-				if (use_yn == "N")
-				{
-					alert(use_ment);
-					$('#useridClick').val("N");
-					$('#userid').val("");
-					$('#userid').focus();
-				}
-			}
-			, error: function(xhr, status, error)
-			  {
-				alert(error);				
-			  }	
-		});			
-		return false;
-	});
-
-	$('#userid').keyup(function() {
-		checkKorean(document.member_box.userid);
-	});	
-
-	$('#phone2').keyup(function() {
-		var data = $(this).val();		
-		if (data)
-		{
-			if (!validate_num(data))
-			{
-				alert("숫자만 입력하세요.");
-				$(this).val("");
-				$(this).focus();
-			}
-			if(data.length == 4)
-			{
-				$('#phone3').focus();
-			}
-		}
-	});
-
-	$('#phone3').keyup(function() {
-		var data = $(this).val();		
-		if (data)
-		{
-			if (!validate_num(data))
-			{
-				alert("숫자만 입력하세요.");
-				$(this).val("");
-				$(this).focus();
-			}
-			if(data.length == 4)
-			{
-				$('#phoneAuth').focus();
-			}
-		}
-	});
-
-	$('#phoneAuth').keyup(function() {
-		var data = $(this).val();		
-		if (data)
-		{
-			if (!validate_num(data))
-			{
-				alert("숫자만 입력하세요.");
-				$(this).val("");
-				$(this).focus();
-			}
-			if(data.length == 4)
-			{
-				$('#email1').focus();
-			}
-		}
-	});
-
-	/* $('#phone_auth').click(function() {
-		phone1 = $('#phone1').val();
-		phone2 = $('#phone2').val();
-		phone3 = $('#phone3').val();
-		if (!phone1 || !phone2 || !phone3)
-		{
-			alert("핸드폰번호를 정확히 입력해주세요.");			
-			return;
-		}else{	
-			$.ajax({
-				type:"post"
-				, url:"phoneAuth.asp"
-				, data:{phone1: phone1, phone2: phone2, phone3: phone3}				
-				, success: function(return_data) {				
-					var return_data_arry = return_data.split("㉬");
-					var number_auth = return_data_arry[0];
-					var use_yn = return_data_arry[1];
-					var use_ment = return_data_arry[2];
-					if (use_yn == "Y")
-					{
-						alert(use_ment);					
-						$('#phoneClick').val(number_auth);		
-						$('#phoneAuth').focus();
-					}
-					if (use_yn == "N")
-					{
-						alert(use_ment);						
-					}
-				}
-				, error: function(xhr, status, error)
-				  {
-					alert(error);				
-				  }	
-			});			
-			return false
-		}
-	}); */
-
-	//이메일선택시 도메인부분 수정못하게 설정
-	$('#email3').change(function() {
-		var data = $(this).val();		
-		if (data)
-		{
-			$('#email2').val(data).attr("readonly",true);
-		}else{
-			$('#email2').val(data).attr("readonly",false);
-		}
-	});
-
-	$("#cusEnter").datepicker({
-		changeMonth: true,
-		changeYear: true,
-		yearRange:'2017:+5',
-		dateFormat: 'yy-mm-dd',
-		dayNamesMin: ['<font color=red>일</font>','월','화','수','목','금','<font color=blue>토</font>'],
-		weekHeader: 'Wk',
-		monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],			
-		showMonthAfterYear: true,		
-		minDate:0
-	});
-
-	$('#dong_btn').click(function() {
-		var data = $(this).attr("data");
-		if (data == "0")
-		{
-			$(".member_step_agree").show();
-			$(this).attr("data","1");
-		}
-		if (data == "1")
-		{
-			$(".member_step_agree").hide();
-			$(this).attr("data","0");
-		}
-	});
-
-	$('#reset').click(function() {
-		document.member_box.reset();
-	});
-
-	$('#submit').click(function() {		
-		var userid = $('#userid').val();		
-		if (!userid || userid.length < 6 || userid.length > 15)
-		{
-			alert("아이디를 정확히 입력해 주십시오.\n\n아이디는 6~15자까지 허용됩니다. \n\n한글아이디는 사용금지입니다.");
-			$('#userid').val('');
-			$('#userid').focus();
-			return;
-		}
-		//아이디 중복검사 시작//
-		/* var useridClick = $('#useridClick').val();
-		if (!useridClick || useridClick == "N")
-		{
-			alert("아이디 중복검사를 해주세요!");        
-			return;
-		} */
-		//아이디 중복검사 끝//
-		var name = $('#name').val();
-		if (!name)
-		{
-			alert("이름을 입력해주세요!");
-			$('#name').val('');
-			$('#name').focus();
-			return;				
-		}
-		//닉네임 유효성 검사 시작//
-		var nickName = $('#nickName').val();
-		if (!nickName || nickName.length < 1 || nickName.length > 11 )
-		{
-			alert("닉네임을 입력해 주세요.\n\n닉네임은 1~10자까지 허용됩니다. \n\n한글,영문으로 설정가능합니다.");
-			$('#nickName').val('');
-			$('#nickName').focus();
-			return;
-		} 
-		//닉네임 유효성 검사 끝//
-		var pwd = $('#pwd').val();
-		var pwd1 = $('#pwd1').val();
-		if (!pwd || pwd.length < 6 || pwd.length > 12 )
-		{
-			alert("비밀번호를 정확히 입력해 주십시오\n\n비밀번호는 6~12자까지 허용됩니다. \n\n한글비밀번호는 사용금지입니다.");
-			$('#pwd').val('');
-			$('#pwd').focus();
-			return;
-		}    
-		if (pwd != pwd1)
-		{
-			alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.\n정확히 입력해 주십시요.");
-			$('#pwd1').val('');
-			$('#pwd1').focus();
-			return;
-		}	
-		
-		var phone1 = $('#phone1').val();
-		var phone2 = $('#phone2').val();
-		var phone3 = $('#phone3').val();		
-		if (!phone1 || !phone2 || !phone3)
-		{
-			alert("휴대폰번호 항목을 모두 입력해주세요!");
-			$('#phone2').focus();
-			return;					
-		}else{
-			var mobile = $("#phone1").val()+"-"+$("#phone2").val()+"-"+$("#phone3").val();
-			document.getElementById("mobile").value = mobile;
-		}
-		
-		var email1 = $('#email1').val();
-		var email2 = $('#email2').val();
-		var email3 = $('#email3').val();
-		if(email1 && email2){
-			var email = $("#email1").val()+"@"+$("#email2").val();
-			document.getElementById("email").value = email;
-			/* alert("결혼예정일 : "+$("#cusEnter").val()); */
-		}else if((email1 && !email2) || (!email1 && email2)) {
-			alert("이메일 주소를 확인해 주세요!");
-			return false;
-		}
-		
-		
-		
-		/*var phoneClick = $('#phoneClick').val();
-		if (!phoneClick)
-		{
-			alert("휴대폰인증을 하셔야 합니다!");        
-			return;
-		}
-		var phoneAuth = $('#phoneAuth').val();
-		if (!phoneAuth)
-		{
-			alert("휴대폰 인증번호를 입력해 주세요!");
-			$('#phoneAuth').focus();
-			return;
-		}
-		if (phoneClick != phoneAuth)
-		{
-			alert("인증번호가 일치하지 않습니다!\n정확히 입력해 주세요!");
-			$('#phoneAuth').focus();
-			return;
-		} */
-		
-		
-		/* 기업회원 선택시 */
-		//기업회원 확인하기
-		var chk = false;
-		$("input[id=general]:checked").each(function(){
-			chk = true;
-		});
-		if(chk != true){
-			
-			//업체명
-			var com_namePtn = /^[가-힣A-Za-z]{1,20}$/;	
-			if (com_namePtn.test($("#com_name").val()) != true) {
-				alert("업체명은 한글, 영문만, 최대 20자까지 입력가능합니다.");
-				$("#com_name").focus();
-				$("#com_name").val("");
-				return false;
-			}
-			
-			//대표번호
-			var telPtn2 = /^\d{3,4}$/;
-			var telPtn3 = /^\d{4}$/;
-			if (telPtn2.test($("#com_tel2").val()) != true || telPtn3.test($("#com_tel3").val()) != true) {
-				alert("전화번호를 형식에 맞게 입력해주세요!");
-				$("#com_tel2").focus();
-				$("#com_tel2").val("");
-				$("#com_tel3").val("");
-				return false;
-			}else {
-				var com_tel = $("#com_tel1").val()+"-"+$("#com_tel2").val()+"-"+$("#com_tel3").val();
-				document.getElementById("com_tel").value = com_tel;
-			}
-			
-		}
-		
-		
-		if ($("input[id='sdong']").is(":checked"))
-		{}else {
-			alert("개인정보취급방침 동의 하셔야 합니다!")
-			$('#sdong').focus();
-			return false;
-		}		
-		//$('#member_box').attr("action","member_access.asp");
- 		
-		//로그인 확인 클릭		
-		$('#member_box').submit();		
-	});
-});
-
-function checkNumber(val)
-{
-	if(isNaN(val.value))
-	{ 
-		alert("숫자만 입력 가능합니다!"); 
-		val.focus();
-		val.value = "";
-	}
-}
-
-function checkKorean(val)
-{
-	for(i=0; i<val.value.length; i++)
-	{
-		if(((val.value.charCodeAt(i) > 0x3130 && val.value.charCodeAt(i) < 0x318F) || (val.value.charCodeAt(i) >= 0xAC00 && val.value.charCodeAt(i) <= 0xD7A3)))
-		{
-		    alert("한글아이디는 입력하실 수 없습니다.");
-			val.focus(); 
-			val.value = "";					
-		}				
-	}
-}
-
-function validate_num(val)
-{
-	var pattern = new RegExp(/^[0-9]+$/);
-	return pattern.test(val);
-}
-
-function noRefresh()
-{
-	/* CTRL + N키 막음. */
-    if ((event.keyCode == 78) && (event.ctrlKey == true))
-    {
-		event.keyCode = 0;
-        return false;
-    }
-    /* F5 번키 막음. */
-    if(event.keyCode == 116)
-    {
-		event.keyCode = 0;
-        return false;
-    }
- }
- document.onkeydown = noRefresh ;
- 
-
- 
-</script>
 <div id="contain02">
 	<div id="contain02_text">
-		<span class="title_name">회원가입</span>
-        <span class="title_detail">결혼 준비의 새로운 기준 웨딩수다와 함께 하세요!</span>
+		<span class="title_name">로그인</span>
+        <span class="title_detail">결혼 준비의 새로운 기준 베리굿웨딩과 함께 하세요!</span>
     </div>
 </div>
-<div id="member_wrap">
-	<form name="member_box" id="member_box" method="post" action="/member/joinCheck">
-	<input type="hidden" name="useridClick" id="useridClick">
-	<input type="hidden" name="phoneClick" id="phoneClick">   
-	<div class="member_form">
-		<ul>
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;아이디</span>
-				<div class="value_m">
-					<input type="text" name="userid" id="userid" class="member_input02_mini" style="width:120px;padding-left:5px;font-size:15px;line-height:25px;color:#000000;" maxlength="15">
-					<a id="id_button" style="cursor:pointer;"><input type="button" id="join_id_btn" value="아이디 중복" style="background-color:#252524;"></a> &nbsp;(영문+숫자로 6~15자 이내)
-				</div>
-			</li>	
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;이름</span>
-				<div class="value_m">
-					<input type="text" name="name" id="name" class="member_input01" style="ime-mode:active;width:120px;padding-left:5px;font-size:15px;line-height:25px;color:#000000;"> 
-					<select name="sex" id="sex" style="font-size:15px;width:60px;height:30px;">						
-						<option value="W"> 신부</option>
-						<option value="M">신랑</option>						
-					</select>
-				</div>
-			</li>
-			
-			
-			
-			
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;닉네임</span>
-				<div class="value_m">
-					<input type="text" name="nickName" id="nickName" class="member_input01" style="ime-mode:active;width:120px;padding-left:5px;font-size:15px;line-height:25px;color:#000000;">  &nbsp;(한글+영문으로 1~10자 이내)
-				</div>
-			</li>
-			
-			
-			
-			
-			
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;비밀번호</span>
-				<div class="value_m">
-					<input type="password" name="pwd" id="pwd" class="member_input01" style="width:180px;padding-left:5px;font-size:15px;color:#000000;" maxlength="12"> &nbsp;(영문+숫자로 6~12자 이내)
-				</div>
-			</li>                	
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;비밀번호 확인</span>
-				<div class="value_m">
-					<input type="password" name="pwd1" id="pwd1" class="member_input01" style="width:180px;padding-left:5px;font-size:15px;color:#000000;" maxlength="12">
-				</div>                
-			</li>
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;휴대폰 번호</span>
-				<div class="value_selet02">
-					<select name="phone1" id="phone1" class="phone_select" style="width:90px;font-size:23px;float:left;margin-right:3px;">
-						<option value="010">010</option>
-						<option value="011">011</option>
-						<option value="016">016</option>
-						<option value="017">017</option>
-						<option value="018">018</option>
-						<option value="019">019</option>
-					</select>
-					<span class="idpw_textspan2">-</span><input name="phone2" type="text" class="member_input_tel" id="phone2" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"><span class="idpw_textspan2">-</span><input name="phone3" type="text" class="member_input_tel" id="phone3" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"> <a id="phone_auth" style="cursor:pointer;"></a>
-					<input type="hidden" name="mobile" id="mobile" value="">      
-				</div>			
-			</li>
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;이메일</span>
-				<div class="value_m">
-					<input type="text" name="email1" id="email1" class="member_input_email" style="width:120px;padding-left:5px;font-size:15px;color:#000000;">@ <input type="text" name="email2" id="email2" class="member_input_email" style="width:120px;padding-left:5px;font-size:15px;color:#000000;">
-					<select name="email3" id="email3" style="font-size:16px; height:30px;">
-						<option value="">직접입력</option>
-						<option value="naver.com">naver.com</option>
-						<option value="hanmail.net">hanmail.net</option>
-						<option value="gmail.com">gmail.com</option>
-						<option value="daum.net">daum.net</option>
-						<option value="paran.com">paran.com</option>
-						<option value="empal.com">empal.com</option>
-						<option value="nate.com">nate.com</option>
-						<option value="yahoo.co.kr">yahoo.co.kr</option>
-						<option value="chol.com">chol.com</option>
-						<option value="dreamwiz.com">dreamwiz.com</option>
-						<option value="hotmail.com">hotmail.com</option>
-						<option value="korea.com">korea.com</option>
-						<option value="lycos.co.kr">lycos.co.kr</option>
-						<option value="netian.com">netian.com</option>
-					</select>
-					<input type="hidden" name="email" id="email" value="">    
-				</div>
-			</li>	
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png" align="absmiddle">&nbsp;&nbsp;결혼예정일</span>
-				<div class="value_m">
-					<input type="date" name="cusEnter" id="cusEnter" class="member_input_email hasDatepicker" style="width:150px;cursor:pointer;padding-left:5px;font-size:15px;color:#000000;">
-				</div>
-			</li>
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;추천인</span>
-				<div class="value_m">
-					<input type="text" name="chuchon" id="chuchon" class="member_input_email" style="width:120px;padding-left:5px;font-size:15px;color:#000000;"> 
-				</div>			
-			</li>
-			
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:16px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;&nbsp;가입유형</span>
-				<div class="value_radio" style="line-height:35px;">
-					<label id="radio_text" style="font-size:15px;"><input type="radio" name="businessTy" id="general" class="raido_click" value="general" onchange="setDisplay()" checked>일반회원</label>
-					<label id="radio_text" style="font-size:15px;">
-					<input type="radio" name="businessTy" id="company" class="raido_click" value="company" onchange="setDisplay()" style="font-size:15px;line-height:25px;color:#000000;">기업회원&nbsp;(※업체명, 대표번호 입력필수)</label>	
-				</div>
-			</li>
-			
-			
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;업체명</span>
-				<div class="value_m">
-					<input type="text" name="com_name" id="com_name" class="member_input_email" style="width:180px;padding-left:5px;font-size:15px;color:#000000;">  &nbsp;(한글+영문 최대20자)
-				</div>			
-			</li>
-			
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;업체 대표번호</span>
-				<div class="value_selet02">
-					<select name="com_tel1" id="com_tel1" class="phone_select" style="width:90px;font-size:23px;float:left;margin-right:3px;">
-						<option value="02" selected="selected">02</option>
-						<option value="031">031</option>
-						<option value="032">032</option>
-						<option value="033">033</option>
-						<option value="041">041</option>
-						<option value="042">042</option>
-						<option value="043">043</option>
-						<option value="051">051</option>
-						<option value="052">052</option>
-						<option value="053">053</option>
-						<option value="054">054</option>
-						<option value="055">055</option>
-						<option value="061">061</option>
-						<option value="062">062</option>
-						<option value="063">063</option>
-						<option value="064">064</option>
-						<option value="070">070</option>
-					</select>
-					<span class="idpw_textspan2">-</span><input name="com_tel2" type="text" class="member_input_tel" id="com_tel2" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"><span class="idpw_textspan2">-</span><input name="com_tel3" type="text" class="member_input_tel" id="com_tel3" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"> <a id="phone_auth" style="cursor:pointer;"></a>
-					<input type="hidden" name="com_tel" id="com_tel" value="">       
-				</div>			
-			</li>
-			
-			
-			
-			
-			
-			<li class="member_box_li_selet">
-				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;개인정보동의</span>
-				<div class="value_m">
-					<input type="checkbox" class="join_privacy_btn" name="sdong" id="sdong" value="Y" checked="" style="font-family:nanum barun gothic"> <u id="dong_btn" style="cursor:pointer;" data="0">개인정보취급방침</u>을 &nbsp;확인&nbsp; 동의합니다.
-				</div>	
-			</li>
-		</ul>
-	</div>
-	</form>
-	<div class="mem_Lpic_wrap"><p><img src="http://vgood.co.kr/admin/contentsImg/homepage/201803/login.jpg" alt="로그인"></p></div>	
-</div>
-<div id="member_join_wrap">
-	<!-- 개인정보 방침 시작 //-->
-	<div class="member_step_agree" style="display:none;">
-		<span class="arrow"><img src="../images/reserve_ic_arrow.png" alt="동의화살표"></span>
-<textarea cols="157px" rows="5px" readonly="" class="textarea" style="padding-left:10px;padding-top:10px;padding-bottom:10px;">
-</textarea>
-</div>
-<!-- 개인정보 방침 시작 //-->
-    <div class="member_button_area">
-		<span class="lineup">
-			<span class="button_pack">
-				<span class="btn_input"><button type="button" id="submit" class="btn_lg_color" onclick="joinCheck()" style="cursor:pointer;font-size:18px;font-weight:bold;">확인</button></span>
-				<span class="btn_input"><button type="reset" id="reset" class="btn_lg_color02" style="cursor:pointer;font-size:18px;">취소</button></span>
-			</span>
-        </span>
+<script language="javascript">
+$(document).ready(function() {	
+	$('#userid').focus();
+	
+	$("#password").keydown(function(e){
+		if(e.which == 13)
+		{
+			loginSubmit();
+		}
+	});
+	
+	$("#btn_submit").click
+	(
+		function()
+		{
+			loginSubmit();
+		}
+	);	
+	
+	$('#logpwd_find').click(function() {
+		top.location.href = "find_id.asp";		
+	});
+
+	$('#register').click(function() {
+		top.location.href = "member.asp";		
+	});	
+});
+
+function loginSubmit()
+{	
+	userid = $('#userid').val();
+	if (!userid)
+	{
+		alert("아이디를 입력하세요!");
+		$('#userid').focus();
+		return;
+	}
+	password = $('#password').val();
+	if (!password)
+	{
+		alert("비밀번호를 입력하세요!");
+		$('#password').focus();
+		return;
+	}	
+	$.ajax({
+		type:"post"
+		, url:"login_ok.asp"			
+		, data:{userid: userid, password: password}	
+		, success: function(html) {			
+			var html_arry = html.split("㉬");
+			var str1 = html_arry[0];
+			var str2 = html_arry[1];			
+			if (str2 == "N")
+			{
+				alert(str1);
+				$('#userid').val('');
+				$('#password').val('');
+			}else if (str2 == "Y") {
+				return_url = escape(top.location.href);
+				return_url_arry = return_url.split("%3F");
+				url_ = unescape(return_url_arry[1]).split("url=").join("");
+				url_ = url_.split("%3F").join("?");
+				url_ = url_.split("%3D").join("=");				
+				url_ = url_.split("%26").join("&");
+				url_ = url_.split("%3A").join(":");				
+				url_val = unescape(return_url_arry[2]);
+				url_val = url_val.split("%3F").join("");
+				url_val = url_val.split("undefined").join("");					
+				if (url_val)
+				{
+					top.location.href = url_+"?"+url_val;
+				}else {
+					top.location.href = url_;
+				}				
+			}
+		}
+		, error: function(xhr, status, error)
+		  {
+			alert("로그인하는 과정에서 오류가 발생하였습니다!");
+		  }	
+	});	
+}
+</script>
+<div class="log_in_wrap">
+    <form name="formlogin" method="post">	     
+        <div class="log_form_box">
+            <div id="contain03_text">
+            <span class="title" id="log_in_title">Member Login</span>
+            </div>
+                <ul id="input_design_login_wrap">
+                    <li><input type="text" name="userid" id="userid" class="login_input_design" style="padding-left:5px;"></li>
+                    <li><input type="password" name="password" id="password" class="login_input_design" style="padding-left:5px;"></li>
+                    <input type="button" class="log_in_btn_login" value="LOGIN" id="btn_submit">                 
+               </ul>			
+        </div>
+    </form>
+	<div id="log_in_btn_box_right">
+    	<img src="http://vgood.co.kr/admin/contentsImg/homepage/201803/join(1).jpg" alt="로그인">		
+    </div>
+    <div class="log_in_btn_box">
+            <ul>
+            	<form id="log_login_page02" method="post">
+                <li style="color:#5c5b5b;">로그인 정보를 잊어버리셨나요? <input class="login_find" id="logpwd_find" type="button" alt="정보찾기" value="아이디 / 비밀번호 찾기"></li>
+                <li style="color:#5c5b5b;">아직 온라인 회원이 아니신가요?<input class="login_online" id="register" type="button" alt="회원가입" value="온라인 회원가입"></li>
+            	</form>
+            </ul>
+    </div>
+	<div class="login_bottom">
+    	<span></span>
     </div>
 </div>
 
+
+<script language="JavaScript" type="text/JavaScript">
+$(document).ready(function() {
+	var userAgent = navigator.userAgent.toLowerCase();
+	var machine = "";
+	var agent = "";
+	
+	if(userAgent.match('iphone')) 
+	{
+		 machine = "아이폰";
+		 agent = "1"
+	} 
+	else if(userAgent.match('ipad')) 
+	{
+	   machine = "아이패드";
+	   agent = "1"
+	} 
+	else if(userAgent.match('ipod')) 
+	{
+		machine = "아이팟";
+		agent = "1"
+	} 
+	else if(userAgent.match('android')) 
+	{
+		machine = "안드로이드";
+		agent = "1"
+	}
+	else if(userAgent.match('blackberry')) 
+	{
+		machine = "블랙베리";
+		agent = "1"
+	}
+	else if(userAgent.match('LG')) 
+	{
+		machine = "LG";
+		agent = "1"
+	}
+	else if(userAgent.match('MOT')) 
+	{
+		machine = "모토로라";
+		agent = "1"
+	}
+	else if(userAgent.match('SAMSUNG')) 
+	{
+		machine = "SAMSUNG";
+		agent = "1"
+	}
+	else if(userAgent.match('SonyEricsson')) 
+	{
+		machine = "소니에릭손";
+		agent = "1"
+	}
+	if (agent == "1")
+	{
+		$("#mobile_view").show();
+	}
+	
+	$("#mobile_view").click(function() {
+		top.location.href="/mobile";
+	});
+});
+</script>
+<div id="mobile_view" style="font-size:4em;font-weight:bold;text-align:center;height:110px;line-height:110px;display:none;">모바일로 보기</div>
+<!--//footer 끝-->
+
+<!--퀵메뉴 시작-->
+   
 <style>
 	#popup2 {border:solid 5px #444;text-align:left;background:#fff;}
 	#popup2 h1 {background:#444;padding:8px 18px 12px;border-bottom:solid 3px #dbdbdb;}
@@ -688,7 +314,6 @@ function noRefresh()
 	table.topLine_brown {width:100%;border-top:solid 1px #dedede;}
 </style>
 <script type="text/javascript">
-
 $(document).ready
 (
 	function()
@@ -1144,69 +769,29 @@ $(document).ready
 );
 </script>
 
+<!--//퀵메뉴 끝-->  </div>
 
-<script language="JavaScript" type="text/JavaScript">
-$(document).ready(function() {
-	var userAgent = navigator.userAgent.toLowerCase();
-	var machine = "";
-	var agent = "";
-	
-	if(userAgent.match('iphone')) 
-	{
-		 machine = "아이폰";
-		 agent = "1"
-	} 
-	else if(userAgent.match('ipad')) 
-	{
-	   machine = "아이패드";
-	   agent = "1"
-	} 
-	else if(userAgent.match('ipod')) 
-	{
-		machine = "아이팟";
-		agent = "1"
-	} 
-	else if(userAgent.match('android')) 
-	{
-		machine = "안드로이드";
-		agent = "1"
-	}
-	else if(userAgent.match('blackberry')) 
-	{
-		machine = "블랙베리";
-		agent = "1"
-	}
-	else if(userAgent.match('LG')) 
-	{
-		machine = "LG";
-		agent = "1"
-	}
-	else if(userAgent.match('MOT')) 
-	{
-		machine = "모토로라";
-		agent = "1"
-	}
-	else if(userAgent.match('SAMSUNG')) 
-	{
-		machine = "SAMSUNG";
-		agent = "1"
-	}
-	else if(userAgent.match('SonyEricsson')) 
-	{
-		machine = "소니에릭손";
-		agent = "1"
-	}
-	if (agent == "1")
-	{
-		$("#mobile_view").show();
-	}
-	
-	$("#mobile_view").click(function() {
-		top.location.href="/mobile";
-	});
-});
-</script>
-<div id="mobile_view" style="font-size:4em;font-weight:bold;text-align:center;height:110px;line-height:110px;display:none;">모바일로 보기</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 <!--푸터 넣을거임  -->

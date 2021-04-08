@@ -1,0 +1,30 @@
+1. 회원가입
+
+==>DB생성 SQL문<==
+
+create table ws_member(
+userid varchar2(20) primary key,
+name varchar2(20),
+sex varchar2(5),
+nickName varchar2(40),
+pwd varchar2(30),
+mobile varchar2(20),
+email varchar2(50),
+cusEnter varchar2(30),
+chuchon varchar2(20),
+businessTy varchar2(20),
+com_name varchar2(60),
+com_tel varchar2(20),
+sdong varchar2(5),
+sign_up_date date default sysdate
+);
+
+
+
+
+==>회원가입 더미데이터<==
+
+insert into ws_member values(
+'admin','관리자','W','관리자','1111','010-1111-1111','admin@naver.com',
+'2021-04-08',null,'company','웨딩수다','02-111-1111',
+'Y',sysdate);
