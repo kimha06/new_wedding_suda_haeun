@@ -27,3 +27,42 @@ insert into ws_member values(
 'admin','관리자','W','관리자','1111','010-1111-1111','admin@naver.com',
 '2021-04-08',null,'company','웨딩수다','02-111-1111',
 'Y',sysdate,0);
+
+
+
+
+
+
+
+
+
+
+2. 지식인
+==>DB생성 SQL문<==
+create table ws_inquiry_board(
+bid number(4) primary key,
+bgroup number(4),
+bindent number(4),
+bhit number(4),
+bstep number(4),
+userid varchar2(20),
+btitle varchar2(80),
+bcontent varchar2(1000),
+bdate date default sysdate,
+filename varchar2(30),
+constraint fk_userid foreign key(userid) references ws_member(userid)
+);
+
+==>시퀀스 생성<==
+create sequence ws_inquiry_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 1000
+nocycle;
+
+==>지식인 더미데이터<==
+insert into ws_inquiry_board values(
+ws_inquiry_seq.nextval, ws_inquiry_seq.currval,0,0,0,
+'admin','제목입니다.','내용입니다.',sysdate,'1.jpg'
+);
