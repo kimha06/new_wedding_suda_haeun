@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.site.mapper.Inquiry_mapper">
+
+	<!-- 전체 리스트 출력(검색기능 사용안함) -->
+  <select id="selectBoardListAll" resultType="com.site.dto.inquiry_boardDto">
+		select * from 
+		<![CDATA[
+		(select rownum rnum, a.* from 
+		(select * from ws_inquiry_board order by bGroup desc, bStep asc) a) 
+		where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+  </select>
+  
+    <!-- (검색기능 사용) 총 게시물 리스트 -->
+  <select id="selectBoardSearchList" resultType="com.site.dto.inquiry_boardDto">
+		select * from
+		<![CDATA[ 
+		(select rownum rnum, a.* from 
+		(select * from ws_inquiry_board where btitle like '%'||#{search}||'%' or bcontent like '%'||#{search}||'%' order by bGroup desc, bStep asc) a) 
+		where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+  </select>
+  
+  	<!-- 전체 게시글 개수(검색기능사용X) -->  
+  <select id="listCount" resultType="int">
+		select count(*) from ws_inquiry_board
+  </select>
+  
+    <!-- (검색기능 사용) 게시글 수 -->
+  <select id="listCountSearchAll" resultType="int">
+		select count(*) from ws_inquiry_board where btitle like '%'||#{search}||'%' or bcontent like '%'||#{search}||'%'
+  </select>
+  
+    <!-- 게시글 내용보기(content_view) -->
+  <select id="selectBoardContentView" resultType="com.site.dto.inquiry_boardDto">
+		select * from ws_inquiry_board where bid=#{bid}
+  </select>
+  
+      <!-- 게시글 작성자 정보 : 이름 -->
+  <select id="selectName" resultType="String">
+		select a.name
+		from ws_member a, ws_inquiry_board b
+		where a.userid=b.userid and bid=#{bid}
+  </select>
+  
+    <!-- 조회수 1 증가 -->
+  <update id="updateUpHit">
+		update ws_inquiry_board set bhit = bhit+1 where bid=#{bid}
+  </update>
+  
+</mapper>

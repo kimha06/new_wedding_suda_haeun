@@ -17,6 +17,18 @@
 <script type="text/javascript" src="/js/prog.js"></script>
 <script language="javascript" src="/js/jquery-ui-1.10.4.custom.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	function deleteCheck(){
+		if(confirm("삭제하시겠습니까?")){
+  			location.href="./delete?bid=${map.dto.bid}&page=${map.page}&search=${map.search}";
+  		}else{
+  			return false;
+  		}//if 
+		
+		
+	}//deleteCheck()
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -117,6 +129,7 @@
     </div>
     <div id="after_detail_img" style="font-size:14px;">        	
 		${map.dto.bcontent}
+		<img alt="" src="/upload/${map.dto.filename}">
     </div>
 	
     <div id="after_detail_lotation">
@@ -124,7 +137,7 @@
 			<div class="after_lotation_left01"><a><img src="../images/up.jpg" alt="up">이전글</a></div>
             <div class="after_lotation_left02">
 				
-					<a href="after_view.asp?idx=18875&amp;pageNo=2&amp;search=&amp;keyword=">[웨딩촬영] 메이든스튜디오 + 모니카블랑쉬 + 살롱드뮤사이</a> 
+					<a href="./inquiry_content_view?bid=${map.preDto.bid}&page=${map.page}&search=${map.search}">${map.preDto.btitle}</a> 
 				
 			</div>
         </div>
@@ -132,14 +145,14 @@
 			<div class="after_lotation_right01"><a><img src="../images/down.jpg" alt="down">다음글</a></div>
             <div class="after_lotation_right02">
 				
-					<a href="after_view.asp?idx=18877&amp;pageNo=2&amp;search=&amp;keyword=">[웨딩촬영] 클로드원스 + 셀렉션h + 정샘물웨스트</a> 
+					<a href="./inquiry_content_view?bid=${map.nextDto.bid}&page=${map.page}&search=${map.search}">${map.nextDto.btitle}</a> 
 				</div>
             </div>
         </div>     
 		<div id="after_return">
 			<span class="after_return_txt_list"><a href="./inquiry_main?page=${map.page}&search=${map.search}">목록으로</a></span>
-			<span class="after_return_txt_edit"><a id="edit_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지">수정</a></span>
-			<span class="after_return_txt_del"><a id="del_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지">삭제</a></span>
+			<span class="after_return_txt_edit"><a href="./inquiry_modify_view?bid=${map.dto.bid}&page=${map.page}&search=${map.search}" id="edit_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지">수정</a></span>
+			<span class="after_return_txt_del"><a id="del_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지" onclick="deleteCheck()">삭제</a></span>
 			<span class="after_return_txt_write"><a href="./inquiry_write_view" id="regist_btn" style="cursor:pointer;">글쓰기</a></span>
 		</div>
 		<div style="height:70px;">

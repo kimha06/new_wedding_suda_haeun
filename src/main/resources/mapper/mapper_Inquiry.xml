@@ -52,4 +52,71 @@
 		update ws_inquiry_board set bhit = bhit+1 where bid=#{bid}
   </update>
   
+    <!-- 글쓰기 내용 저장 -->
+  <insert id="insertBoardWrite">
+  		<![CDATA[
+  		insert into ws_inquiry_board values(
+		ws_inquiry_seq.nextval, ws_inquiry_seq.currval,0,0,0,
+		#{userid},#{btitle},#{bcontent},sysdate,#{filename})
+		]]>
+  </insert>
+  
+    <!-- 이전글 가져오기(검색어 없음) -->
+  <select id="selectBoard_pre" resultType="com.site.dto.inquiry_boardDto">
+		<![CDATA[
+		select * from (select rownum rnum, a.* from
+		(select * from ws_inquiry_board order by bGroup desc, bStep asc) a)
+		where rnum=
+		(select rnum from (select rownum rnum, a.* from
+		(select * from ws_inquiry_board order by bGroup desc, bStep asc) a)
+		where bid=#{bid})+1
+		]]>
+  </select>
+  
+   <!-- 다음글 가져오기(검색어 없음) -->
+  <select id="selectBoard_next" resultType="com.site.dto.inquiry_boardDto">
+		<![CDATA[
+		select * from (select rownum rnum, a.* from
+		(select * from ws_inquiry_board order by bGroup desc, bStep asc) a)
+		where rnum=
+		(select rnum from (select rownum rnum, a.* from
+		(select * from ws_inquiry_board order by bGroup desc, bStep asc) a)
+		where bid=#{bid})-1
+		]]>
+  </select>
+  
+    <!-- 이전글 가져오기(검색어 있음) -->
+  <select id="selectBoard_pre_withSearch" resultType="com.site.dto.inquiry_boardDto">
+		<![CDATA[
+		select * from 
+		(select rownum rnum, a.* from 
+		(select * from ws_inquiry_board where btitle like '%'||#{search}||'%' or bcontent like '%'||#{search}||'%' order by bGroup desc, bStep asc) a) 
+		where rnum=
+		(select rnum from 
+		(select rownum rnum, a.* from 
+		(select * from ws_inquiry_board where btitle like '%'||#{search}||'%' or bcontent like '%'||#{search}||'%' order by bGroup desc, bStep asc) a) 
+		where bid=#{bid})+1
+		]]>
+  </select>
+  
+      <!-- 다음글 가져오기(검색어 있음) -->
+  <select id="selectBoard_next_withSearch" resultType="com.site.dto.inquiry_boardDto">
+		<![CDATA[
+		select * from 
+		(select rownum rnum, a.* from 
+		(select * from ws_inquiry_board where btitle like '%'||#{search}||'%' or bcontent like '%'||#{search}||'%' order by bGroup desc, bStep asc) a) 
+		where rnum=
+		(select rnum from 
+		(select rownum rnum, a.* from 
+		(select * from ws_inquiry_board where btitle like '%'||#{search}||'%' or bcontent like '%'||#{search}||'%' order by bGroup desc, bStep asc) a) 
+		where bid=#{bid})-1
+		]]>
+  </select>
+  
+      <!-- 글 삭제하기 -->
+  <delete id="deleteBoardDelete">
+		delete ws_inquiry_board where bid=#{bid}
+  </delete>
+  
+  
 </mapper>

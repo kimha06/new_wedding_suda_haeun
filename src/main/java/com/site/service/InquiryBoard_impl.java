@@ -1,11 +1,20 @@
 package com.site.service;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.site.dto.inquiry_boardDto;
 import com.site.mapper.Inquiry_mapper;
@@ -21,6 +30,9 @@ public class InquiryBoard_impl implements InquiryBoard {
 	//변수선언
 	List<inquiry_boardDto> list;
 	Map<String, Object> map;
+	inquiry_boardDto preDto;
+	inquiry_boardDto nextDto;
+	inquiry_boardDto inqDto;
 
 	@Override
 	public Map<String, Object> boardListAll(String listPage, String search) {
@@ -59,16 +71,53 @@ public class InquiryBoard_impl implements InquiryBoard {
 	}
 
 	@Override
-	public Map<String, Object> boardContentView(String bid, String page, String search) {
-		
-		//조회수 1증가 처리
-		inquiry_mapper.updateUpHit(bid);
+	public Map<String, Object> boardContentView(String bid, String page, String search, HttpServletRequest request, HttpServletResponse response) {
 		
 		//새로고침 조회수 증가 막기 처리- 쿠키이용
 		//https://syaku.tistory.com/275 참고
+		//저장된 쿠키 불러오기
+		Cookie cookies[] = request.getCookies();
+		Map mapCookie = new HashMap<String, Object>();
+		if(request.getCookies() != null) {
+			for(int i=0; i<cookies.length; i++) {
+				Cookie obj = cookies[i];
+				mapCookie.put(obj.getName(), obj.getValue());
+			}//for
+		}//if
+		
+		
+		//저장된 쿠키중에 read_count만 불러오기
+		String cookie_read_count = (String) mapCookie.get("read_count");
+		//저장될 새로운 쿠키값 생성
+		String new_cookie_read_count = "|" + bid;
+		
+		//저장된 쿠키에 새로운 쿠키값이 존재하는지 검사
+		if(StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
+			//없을 경우 쿠키 생성
+			Cookie cookie = new Cookie("read_count", cookie_read_count+new_cookie_read_count);
+			response.addCookie(cookie);
+			
+			//조회수 1증가 처리
+			inquiry_mapper.updateUpHit(bid);
+			
+		}
 
 		
+		//검색기능 사용여부에 따른
+		//이전글, 다음글 가져오기
+		if(search == null || search.equals("")) {
+			preDto = inquiry_mapper.selectBoard_pre(bid);
+			nextDto = inquiry_mapper.selectBoard_next(bid);
+			
+		}else {
+			preDto = inquiry_mapper.selectBoard_pre_withSearch(bid, search);
+			nextDto = inquiry_mapper.selectBoard_next_withSearch(bid, search);
+			
+		}//if
+		
+		
 		inquiry_boardDto dto = inquiry_mapper.selectBoardContentView(bid);
+		
 		
 		//table join을 이용하여 이름 확인하기
 		String name = inquiry_mapper.selectName(bid);
@@ -78,6 +127,61 @@ public class InquiryBoard_impl implements InquiryBoard {
 		map.put("dto", dto);
 		map.put("page", page);
 		map.put("search", search);
+		map.put("preDto", preDto);
+		map.put("nextDto", nextDto);
+		
+		return map;
+	}
+
+	@Override
+	public void boardWrite(inquiry_boardDto inqDto, MultipartFile file) {
+		
+		//첨부파일 처리
+		String fileName = file.getOriginalFilename();  //원본파일 이름
+		String filenameExtension = FilenameUtils.getExtension(fileName).toLowerCase();  //확장자명 가져오기
+		
+		if(filenameExtension != "") {
+			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/";  //파일저장위치(마지막에 반드시 슬래시(/))
+			String uploadFileName = RandomStringUtils.randomAlphanumeric(32)+"."+filenameExtension;  //신규 파일 이름 - 32자리(중복방지)
+			File f = new File(fileUrl+uploadFileName);
+			try {
+				file.transferTo(f);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			//위에서 처리한 파일이름까지 inqDto에 담아서 DB로 보낸다.
+			inqDto.setFilename(uploadFileName);
+		}else {
+			inqDto.setFilename("");
+		}
+		
+		
+		//DB로 전송
+		inquiry_mapper.insertBoardWrite(inqDto);
+		
+	}
+
+	@Override
+	public void boardDelete(String bid, String page, String search) {
+		
+		inquiry_mapper.deleteBoardDelete(bid);
+		
+		map.put("page", page);
+		map.put("search", search);
+		
+	}
+
+	@Override
+	public Map<String, Object> boardModify_view(String bid, String page, String search) {
+		
+		//1개 content 가져오기
+		inqDto = inquiry_mapper.selectBoardContentView(bid);
+		
+		map.put("page", page);
+		map.put("search", search);
+		map.put("inqDto", inqDto);
+		
 		
 		return map;
 	}

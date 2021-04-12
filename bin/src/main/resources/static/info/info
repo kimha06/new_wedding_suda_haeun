@@ -1,0 +1,68 @@
+1. 회원가입
+
+==>DB생성 SQL문<==
+create table ws_member(
+userid varchar2(20) primary key,
+name varchar2(20),
+sex varchar2(5),
+nickName varchar2(40),
+pwd varchar2(30),
+mobile varchar2(20),
+email varchar2(50),
+cusEnter varchar2(30),
+chuchon varchar2(20),
+businessTy varchar2(20),
+com_name varchar2(60),
+com_tel varchar2(20),
+sdong varchar2(5),
+sign_up_date date default sysdate);
+
+
+==>포인트 컬럼 추가<==
+alter table ws_member add(point number(8));
+
+
+==>회원가입 더미데이터<==
+insert into ws_member values(
+'admin','관리자','W','관리자','1111','010-1111-1111','admin@naver.com',
+'2021-04-08',null,'company','웨딩수다','02-111-1111',
+'Y',sysdate,0);
+
+
+
+
+
+
+
+
+
+
+2. 지식인
+==>DB생성 SQL문<==
+create table ws_inquiry_board(
+bid number(4) primary key,
+bgroup number(4),
+bindent number(4),
+bhit number(4),
+bstep number(4),
+userid varchar2(20),
+btitle varchar2(80),
+bcontent varchar2(1000),
+bdate date default sysdate,
+filename varchar2(30),
+constraint fk_userid foreign key(userid) references ws_member(userid)
+);
+
+==>시퀀스 생성<==
+create sequence ws_inquiry_seq
+increment by 1
+start with 1
+minvalue 1
+maxvalue 1000
+nocycle;
+
+==>지식인 더미데이터<==
+insert into ws_inquiry_board values(
+ws_inquiry_seq.nextval, ws_inquiry_seq.currval,0,0,0,
+'admin','제목입니다.','내용입니다.',sysdate,'1.jpg'
+);

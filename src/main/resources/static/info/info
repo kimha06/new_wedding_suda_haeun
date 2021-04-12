@@ -49,9 +49,11 @@ userid varchar2(20),
 btitle varchar2(80),
 bcontent varchar2(1000),
 bdate date default sysdate,
-filename varchar2(30),
+filename varchar2(50),
 constraint fk_userid foreign key(userid) references ws_member(userid)
 );
+
+
 
 ==>시퀀스 생성<==
 create sequence ws_inquiry_seq

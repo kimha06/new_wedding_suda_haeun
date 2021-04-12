@@ -89,7 +89,7 @@
 
 <div class="sub_link_box">
 	<div class="sub_link_menu">
-		<span id="sub_Color_f" class="sub_under_bar"><a href="/noticeboard/notice_list">지식인</a></span>
+		<span id="sub_Color_f" class="sub_under_bar"><a href="./inquiry_main">지식인</a></span>
         <!-- 
         <span id="sub_Color_f"><a href="/noticeboard/board_list">문의게시판</a></span>
 		<span id="sub_Color_f"><a href="/noticeboard/after_list">웨딩후기</a></span>
@@ -125,7 +125,7 @@
      
 			<tr>
 				<td style="font-size:14px;">${dto.bid}</td>        
-				<td class="title"><a href="./inquiry_content_view?bid=${dto.bid}&page=${map.page}&search=${map.search}" class="view_article" style="font-size:14px;">${dto.btitle}</a>  &nbsp;&nbsp;<img src="../images/icon_new.gif" width="52" height="18" alt="NEW" title="NEW" border="0" align="absmiddle" class="ICON_NEW"> 
+				<td class="title"><a href="./inquiry_content_view?bid=${dto.bid}&page=${map.page}&search=${map.search}" class="view_article" style="font-size:14px;">${dto.btitle}</a>  &nbsp;&nbsp; 
                </td>        
                <td style="font-size:14px;">${dto.userid}</td>
                <td style="font-size:14px;">${dto.bdate}</td>
