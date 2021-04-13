@@ -116,19 +116,27 @@ public class InquiryBoard_impl implements InquiryBoard {
 		}//if
 		
 		
+		//DB에서 데이터 가져오기
 		inquiry_boardDto dto = inquiry_mapper.selectBoardContentView(bid);
 		
 		
+		//답변채택 버튼 노출을 위해서
+		//현재의 contentView의 bgroup 값과 모두 같은 튜플중에서 bindent가 0인 튜플의 userid값을 찾는다.
+		//찾은 그 값을 map에 담는다.
+		inquiry_boardDto result_dto = inquiry_mapper.selectFindSameBgroup(dto.getBgroup());
+		
+		
 		//table join을 이용하여 이름 확인하기
-		String name = inquiry_mapper.selectName(bid);
+		//String name = inquiry_mapper.selectName(bid);
 		
 		
-		map.put("name", name);
+		//map.put("name", name);
 		map.put("dto", dto);
 		map.put("page", page);
 		map.put("search", search);
 		map.put("preDto", preDto);
 		map.put("nextDto", nextDto);
+		map.put("result_dto", result_dto);
 		
 		return map;
 	}
@@ -184,6 +192,96 @@ public class InquiryBoard_impl implements InquiryBoard {
 		
 		
 		return map;
+	}
+
+	@Override
+	public void boardModify(inquiry_boardDto inqDto, MultipartFile file, String page, String search) {
+		
+		//첨부파일 처리
+		String fileName = file.getOriginalFilename();  //원본파일 이름
+		String filenameExtension = FilenameUtils.getExtension(fileName).toLowerCase();  //확장자명 가져오기
+		
+		if(filenameExtension != "") {
+			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/";  //파일저장위치(마지막에 반드시 슬래시(/))
+			String uploadFileName = RandomStringUtils.randomAlphanumeric(32)+"."+filenameExtension;  //신규 파일 이름 - 32자리(중복방지)
+			File f = new File(fileUrl+uploadFileName);
+			try {
+				file.transferTo(f);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			//위에서 처리한 파일이름까지 inqDto에 담아서 DB로 보낸다.
+			inqDto.setFilename(uploadFileName);
+		}else {
+			//수정 단계이므로 기존 파일을 유지한다.(""처리하면 기존 파일이름을 덮어쓰기 함)
+			//inqDto.setFilename("");
+		}
+		
+		//DB로 전송
+		inquiry_mapper.updateBoardModify(inqDto);
+		
+		map.put("search", search);
+		map.put("page", page);
+		
+		
+		
+	}
+
+	@Override
+	public void boardReply(inquiry_boardDto inqDto, MultipartFile file, String page, String search) {
+		
+		//첨부파일 처리
+		String fileName = file.getOriginalFilename();  //원본파일 이름
+		String filenameExtension = FilenameUtils.getExtension(fileName).toLowerCase();  //확장자명 가져오기
+		
+		if(filenameExtension != "") {
+			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/";  //파일저장위치(마지막에 반드시 슬래시(/))
+			String uploadFileName = RandomStringUtils.randomAlphanumeric(32)+"."+filenameExtension;  //신규 파일 이름 - 32자리(중복방지)
+			File f = new File(fileUrl+uploadFileName);
+			try {
+				file.transferTo(f);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			//위에서 처리한 파일이름까지 inqDto에 담아서 DB로 보낸다.
+			inqDto.setFilename(uploadFileName);
+		}else {
+			inqDto.setFilename("");
+		}
+		
+		//DB로 전송
+		inquiry_mapper.insertBoardReply(inqDto);
+		
+		
+		//댓글 처리이므로 
+		//같은 그룹안에서 새로운 댓글 아래의 모든 글은 bstep+1 처리해야함
+		inquiry_mapper.insertBoardReplyPlus(inqDto);
+		
+		
+		map.put("search", search);
+		map.put("page", page);
+		
+	}
+
+	@Override
+	public void boardReplyPointCheck(String bid, String page, String search) {
+		
+		System.out.println("impl, bid : "+bid);
+		System.out.println("impl, page : "+page);
+		System.out.println("impl, search : "+search);
+		
+		//답변 채택된 작성자의 포인트 +100 처리
+		int check = inquiry_mapper.updateReplyPointPlus(bid);
+		System.out.println("impl, +100 : "+check);
+		
+		//답변채택이 되고 포인트 지급이 완료되었으므로
+		//ws_inquiry_board 테이블에 replycheck값을 1로 저장한다.
+		inquiry_mapper.updateReplyCheck(bid);
+		
+		map.put("search", search);
+		map.put("page", page);
 	}
 
 }//class

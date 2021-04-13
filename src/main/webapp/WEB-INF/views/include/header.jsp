@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="/WEB-INF/views/include/header.jsp" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -163,9 +164,21 @@ function logout()
                     <span><img src="/images/m_blog.jpg"></span>
                 </div>
                 <div class="main_favor_inbx">
-                    <span><a href="/member/login">로그인</a></span>
-						<span>|</span>
-						<span><a href="/member/join">회원가입</a></span>
+                	<c:choose>
+                		<c:when test="${session_flag eq null || session_flag eq 'fail'}">
+	                   		<span><a href="/member/login">로그인</a></span>
+							<span>|</span>
+							<span><a href="/member/join">회원가입</a></span>
+                		</c:when>
+                		<c:otherwise>
+                			<span>${session_userid}</span>
+							<span>|</span>
+	                   		<span><a href="#">회원정보수정</a></span>
+							<span>|</span>
+							<span><a href="/member/logout">로그아웃</a></span>
+                		
+                		</c:otherwise>
+                	</c:choose>
 					
 				</div>
 			</div>

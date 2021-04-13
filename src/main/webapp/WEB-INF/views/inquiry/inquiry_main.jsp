@@ -19,6 +19,9 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 </head>
 <body>
+<c:choose>
+	<c:when test="${session_flag eq 'success'}">
+
 <div class="wrap">
 <!-- 헤더 너을거임  -->
 
@@ -124,8 +127,16 @@
 		<c:forEach var="dto" items="${map.list}">
      
 			<tr>
-				<td style="font-size:14px;">${dto.bid}</td>        
-				<td class="title"><a href="./inquiry_content_view?bid=${dto.bid}&page=${map.page}&search=${map.search}" class="view_article" style="font-size:14px;">${dto.btitle}</a>  &nbsp;&nbsp; 
+				<td style="font-size:14px;">${dto.bid}</td>
+				<td class="title">
+				<span>
+				<c:forEach begin="1" end="${dto.bindent}">
+					└─&nbsp;Re:&nbsp;
+				</c:forEach> 
+				</span>
+				
+				<span><a href="./inquiry_content_view?bid=${dto.bid}&page=${map.page}&search=${map.search}" class="view_article" style="font-size:14px; float:none;">${dto.btitle}</a></span>
+               	
                </td>        
                <td style="font-size:14px;">${dto.userid}</td>
                <td style="font-size:14px;">${dto.bdate}</td>
@@ -211,4 +222,13 @@
 
 
 
-</div></div></body></html>
+</div></div>
+	</c:when>
+	<c:otherwise>
+		<script type="text/javascript">
+			alert('로그인 후 이용해 주시기 바랍니다!');
+			location.href='/member/login';
+		</script>
+	</c:otherwise>
+</c:choose>
+</body></html>

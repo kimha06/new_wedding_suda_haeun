@@ -57,7 +57,7 @@
   		<![CDATA[
   		insert into ws_inquiry_board values(
 		ws_inquiry_seq.nextval, ws_inquiry_seq.currval,0,0,0,
-		#{userid},#{btitle},#{bcontent},sysdate,#{filename})
+		#{userid},#{btitle},#{bcontent},sysdate,#{filename},0)
 		]]>
   </insert>
   
@@ -117,6 +117,61 @@
   <delete id="deleteBoardDelete">
 		delete ws_inquiry_board where bid=#{bid}
   </delete>
+  
+ 	<!-- 글 수정하기 -->
+	<update id="updateBoardModify">
+	 		<![CDATA[
+		update ws_inquiry_board set
+		btitle=#{btitle}, bcontent=#{bcontent},bdate=sysdate,
+		filename=#{filename} where bid=#{bid}
+		]]>
+	</update>
+	
+		<!-- 답글쓰기 저장 -->
+  <insert id="insertBoardReply">
+  		<![CDATA[
+    	insert into ws_inquiry_board values(
+		ws_inquiry_seq.nextval, #{bgroup},#{bindent}+1,0,#{bstep}+1,
+		#{userid},#{btitle},#{bcontent},sysdate,#{filename},0)
+		]]>
+  </insert>
+  
+    	<!-- 새 댓글 아래 글 bstep+1 처리 -->
+  <update id="insertBoardReplyPlus">
+  		<![CDATA[
+  		update ws_inquiry_board set bstep = bstep+1
+  		where bgroup=#{bgroup} and bstep > #{bstep}
+		]]>
+  </update>
+  
+        <!-- 답변 채택 관련 -->
+  <select id="selectFindSameBgroup" resultType="com.site.dto.inquiry_boardDto">
+		<![CDATA[
+		select * from ws_inquiry_board
+		where bgroup=#{bgroup} and bindent=0
+		]]>
+  </select>
+  
+   	<!-- 답변채택, 포인트 +100 처리 -->
+	<update id="updateReplyPointPlus">
+	 	<![CDATA[
+		update ws_member set point = point + 100
+		where userid=(
+		select userid from ws_member
+		where userid=(
+		select userid from ws_inquiry_board
+		where bid=#{bid}))
+		]]>
+	</update>
+	
+	   	<!-- 답변채택, ws_inquiry_board의 replycheck값을 1로 변경 -->
+	<update id="updateReplyCheck">
+	 	<![CDATA[
+		update ws_inquiry_board set replycheck = 1
+		where bid=#{bid}
+		]]>
+	</update>
+
   
   
 </mapper>

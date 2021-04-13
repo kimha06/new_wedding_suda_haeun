@@ -68,3 +68,9 @@ insert into ws_inquiry_board values(
 ws_inquiry_seq.nextval, ws_inquiry_seq.currval,0,0,0,
 'admin','제목입니다.','내용입니다.',sysdate,'1.jpg'
 );
+
+
+★★★★★★★★★★★★★★답변채택 관련 컬럼이 추가되었습니다!(21.04.13)
+★★★★★★★★★★★★★★21.04.13일 이전 위의 테이블을 생성한 경우 아래 SQL문을 추가해 주시기 바랍니다.
+alter table ws_inquiry_board add replycheck number(2);
+update ws_inquiry_board set replycheck=0;

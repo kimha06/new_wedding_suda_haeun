@@ -22,6 +22,12 @@ public interface Inquiry_mapper {
 	inquiry_boardDto selectBoard_next(String bid);  //다음글 가져오기(검색어 없음)
 	inquiry_boardDto selectBoard_next_withSearch(String bid, String search); //다음글 가져오기(검색어 있음)
 	void deleteBoardDelete(String bid);   //글 삭제하기
+	void updateBoardModify(inquiry_boardDto inqDto);   //글 수정하기
+	void insertBoardReply(inquiry_boardDto inqDto);   //답글 저장하기
+	void insertBoardReplyPlus(inquiry_boardDto inqDto);   //같은 그룹안의 새로운 댓글 밑으로 전부 bstep+1 처리
+	inquiry_boardDto selectFindSameBgroup(int bgroup);   //답변채택 버튼 노출조건 관련
+	int updateReplyPointPlus(String bid);   //답변 채택 시 포인트 +100 처리
+	void updateReplyCheck(String bid);  //답변 채택 완료되어 ws_inquiry_board의 replycheck값을 1로 변경
 
 	
 	

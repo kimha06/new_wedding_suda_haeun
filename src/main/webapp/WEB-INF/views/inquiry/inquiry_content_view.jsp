@@ -121,7 +121,7 @@
     </div>
     <div id="after_detail_date">
 		<span id="after_detail_date_day" style="font-size:13px;color:#000000;">• 작성자</span>
-        <span class="after_detail_date_day" style="font-size:13px;">${map.name}</span>
+        <span class="after_detail_date_day" style="font-size:13px;">${map.dto.userid}</span>
         <span id="after_detail_date_day" style="font-size:13px;color:#000000;">• 작성일</span>
         <span class="after_detail_date_day" style="font-size:13px;">${map.dto.bdate}</span>
         <span id="after_detail_date_day" style="font-size:13px;color:#000000;">• 조회수</span>
@@ -129,7 +129,11 @@
     </div>
     <div id="after_detail_img" style="font-size:14px;">        	
 		${map.dto.bcontent}
-		<img alt="" src="/upload/${map.dto.filename}">
+		<c:choose>
+			<c:when test="${map.dto.filename ne null}">
+				<img alt="" src="/upload/${map.dto.filename}">
+			</c:when>
+		</c:choose>
     </div>
 	
     <div id="after_detail_lotation">
@@ -150,10 +154,22 @@
             </div>
         </div>     
 		<div id="after_return">
-			<span class="after_return_txt_list"><a href="./inquiry_main?page=${map.page}&search=${map.search}">목록으로</a></span>
-			<span class="after_return_txt_edit"><a href="./inquiry_modify_view?bid=${map.dto.bid}&page=${map.page}&search=${map.search}" id="edit_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지">수정</a></span>
-			<span class="after_return_txt_del"><a id="del_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지" onclick="deleteCheck()">삭제</a></span>
-			<span class="after_return_txt_write"><a href="./inquiry_write_view" id="regist_btn" style="cursor:pointer;">글쓰기</a></span>
+			<c:choose>
+				<c:when test="${session_userid eq map.dto.userid}">
+					<span class="after_return_txt_list"><a href="./inquiry_main?page=${map.page}&search=${map.search}">목록으로</a></span>
+					<span class="after_return_txt_edit"><a href="./inquiry_modify_view?bid=${map.dto.bid}&page=${map.page}&search=${map.search}" id="edit_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지">수정</a></span>
+					<span class="after_return_txt_del"><a id="del_btn" style="cursor:pointer;" data="18876" data2="pageNo=2&amp;search=&amp;keyword=" data3="pageNo=2&amp;search=&amp;keyword=" data4="유민지" onclick="deleteCheck()">삭제</a></span>
+					<span class="after_return_txt_write"><a href="./inquiry_reply_view?page=${map.page}&search=${map.search}&bid=${map.dto.bid}" id="regist_btn" style="cursor:pointer;">답글달기</a></span>&nbsp;&nbsp;
+				</c:when>
+				<c:when test="${map.result_dto.userid eq session_userid && map.dto.replycheck eq 0}">
+					<span class="after_return_txt_list"><a href="./inquiry_main?page=${map.page}&search=${map.search}">목록으로</a></span>
+					<span class="after_return_txt_write"><a href="./inquiry_replyCheck?page=${map.page}&search=${map.search}&bid=${map.dto.bid}" id="regist_btn" style="cursor:pointer; background-color:#1a41af;">답변채택</a></span>
+				</c:when>
+				<c:otherwise>
+					<span class="after_return_txt_list"><a href="./inquiry_main?page=${map.page}&search=${map.search}">목록으로</a></span>
+					<span class="after_return_txt_write"><a href="./inquiry_reply_view?page=${map.page}&search=${map.search}&bid=${map.dto.bid}" id="regist_btn" style="cursor:pointer;">답글달기</a></span>&nbsp;&nbsp;
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<div style="height:70px;">
 			             		

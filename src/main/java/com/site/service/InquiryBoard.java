@@ -16,6 +16,9 @@ public interface InquiryBoard {
 	void boardWrite(inquiry_boardDto inqDto, MultipartFile file);
 	void boardDelete(String bid, String page, String search);
 	Map<String, Object> boardModify_view(String bid, String page, String search);
+	void boardModify(inquiry_boardDto inqDto, MultipartFile file, String page, String search);
+	void boardReply(inquiry_boardDto inqDto, MultipartFile file, String page, String search);
+	void boardReplyPointCheck(String bid, String page, String search);
 	
 	
 	

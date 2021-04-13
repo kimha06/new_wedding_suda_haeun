@@ -14,6 +14,7 @@ public class inquiry_boardDto {
 	private int bindent;
 	private int bhit;
 	private int bstep;
+	private int replycheck;
 	private String userid;  //ws_member 외래키로 처리 
 	private String name;    //join, ws_member
 	private String nickName;  //join, ws_member
@@ -21,5 +22,4 @@ public class inquiry_boardDto {
 	private String bcontent;
 	private String bdate;
 	private String filename;  
-	
 }

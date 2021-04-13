@@ -20,7 +20,7 @@
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript">
-	function modifyCheck(){
+	function replyCheck(){
 		
 		if($("#btitle").val() == ""){
 			alert("제목을 입력하세요!");
@@ -44,7 +44,7 @@
 		var modify_data = CKEDITOR.instances.bcontent1.getData(); 
 		document.getElementById('bcontent').value = modify_data;
 				
-		document.modifyForm.submit();
+		document.replyForm.submit();
 		
 	}//writeCheck()
 </script>
@@ -127,7 +127,7 @@
 </div>
 <div id="contain02">
 	<div id="contain02_text">
-		<span class="title_name">지식인 - 수정하기</span>
+		<span class="title_name">지식인 - 답글 달기</span>
         <span class="title_detail">결혼 준비와 관련된 질문과 답변을 자유롭게 올려주세요!</span>
     </div>
 </div>
@@ -135,12 +135,15 @@
 
 
 <div id="online_write_wrap">    
-	<form name="modifyForm" id="modifyForm" method="post" action="./modify" enctype="multipart/form-data">
+	<form name="replyForm" id="replyForm" method="post" action="./reply" enctype="multipart/form-data">
 	
 	<input type="hidden" id="page" name="page" value="${map.page}">
-	<input type="hidden" name="bid" value="${map.inqDto.bid}">
     <input type="hidden" name="search" value="${map.search}">
+	<input type="hidden" name="bid" value="${map.inqDto.bid}">
     <input type="hidden" name="filename" value="${map.inqDto.filename}">
+    <input type="hidden" name="bgroup" value="${map.inqDto.bgroup}">
+    <input type="hidden" name="bstep" value="${map.inqDto.bstep}">
+    <input type="hidden" name="bindent" value="${map.inqDto.bindent}">
 	
 	<div class="online_Awrite_form">
 		<ul>
@@ -150,7 +153,7 @@
             </li>                
             <li class="box_li">
 				<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;이름</span>
-                <div class="value"><input type="text" name="name" id="name" class="online_write_input02" value="${map.inqDto.userid}" style="padding-left:5px;color:#000000;" readonly="readonly"></div>
+                <div class="value"><input type="text" name="userid" id="userid" class="online_write_input02" value="${session_userid}" style="padding-left:5px;color:#000000;" readonly="readonly"></div>
             </li>	
             <li class="box_li line2">
 				<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;파일첨부</span>
@@ -214,7 +217,8 @@ CKEDITOR.replace('bcontent1', {height: 500});
 <!-- DB에서 넘어온 데이터를 ekeditor에 담아서 출력하기 -->
 <script type="text/javascript">
 	$(function(){
-		var modify_data = $("#DB_bcontent").val();
+		var add_text = "<strong>[답글]</strong><br><br><br><br><strong>=================원글 내용=================</strong>";
+		var modify_data = add_text+$("#DB_bcontent").val();
 		CKEDITOR.instances.bcontent1.setData(modify_data);
 		
 	});
@@ -473,7 +477,7 @@ CKEDITOR.replace('bcontent1', {height: 500});
     <div class="online_write_button">
 		<span class="online_center">
 			<span class="button_pack">
-                <span class="btn_input"><button type="button" class="online_lg_color" id="regist_btn" style="cursor:pointer;font-family: NanumBarunGothic;" onclick="modifyCheck()">수정하기</button></span>
+                <span class="btn_input"><button type="button" class="online_lg_color" id="regist_btn" style="cursor:pointer;font-family: NanumBarunGothic;" onclick="replyCheck()">답글달기</button></span>
                 <span class="btn_input"><button type="button" class="online_lg_color02" id="link_btn" data="pageNo=&amp;search=&amp;keyword=" style="cursor:pointer;font-family: NanumBarunGothic;"><a href="./inquiry_main?page=${map.maxPage}&search=${map.search}">목록으로</a></button></span>
             </span>
         </span>

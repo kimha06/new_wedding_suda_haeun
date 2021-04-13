@@ -150,7 +150,7 @@
             </li>                
             <li class="box_li">
 				<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;이름</span>
-                <div class="value"><input type="text" name="name" id="name" class="online_write_input02" value="" style="padding-left:5px;color:#000000;"></div>
+                <div class="value"><input type="text" name="userid" id="userid" class="online_write_input02" value="${session_userid}" style="padding-left:5px;color:#000000;" readonly="readonly"></div>
             </li>	
             <li class="box_li line2">
 				<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;파일첨부</span>

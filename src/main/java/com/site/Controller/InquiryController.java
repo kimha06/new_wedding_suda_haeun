@@ -52,6 +52,7 @@ public class InquiryController {
 			@RequestParam @Nullable String search, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		map = inquiryBoard.boardContentView(bid, page, search, request, response);
+		
 		model.addAttribute("map", map);
 		
 		return "/inquiry/inquiry_content_view";
@@ -62,9 +63,6 @@ public class InquiryController {
 			@RequestPart MultipartFile file, Model model) {
 		
 		
-		//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-		//로그인 완성되면 session으로 처리해야함!!!
-		inqDto.setUserid("admin");   //userid를 강제로 저장함!
 		inquiryBoard.boardWrite(inqDto, file);
 		model.addAttribute("map", map);
 		
@@ -88,14 +86,67 @@ public class InquiryController {
 	public String inquiry_modify_view(@RequestParam String bid, @RequestParam @Nullable String page, 
 			@RequestParam @Nullable String search, Model model) {
 		
-		//여기부터 처리해야함
 		map = inquiryBoard.boardModify_view(bid, page, search);
-		
 		model.addAttribute("map", map);
-		
 		
 		return "/inquiry/inquiry_modify_view";
 	}
+	
+	@RequestMapping("/inquiry/modify")
+	public String inquiry_modify(inquiry_boardDto inqDto, @RequestPart MultipartFile file, 
+			@RequestParam @Nullable String page, 
+			@RequestParam @Nullable String search, Model model) throws Exception {
+		
+		//URL을 통해서 보내는 검색어(search) 한글 깨짐 처리(return을 redirect로 보내기 때문)
+		search = URLEncoder.encode(search, "utf-8");
+		
+		inquiryBoard.boardModify(inqDto, file, page, search);
+		model.addAttribute("map", map);
+		
+		return "redirect:/inquiry/inquiry_main?page="+page+"&search="+search;    //redirect는 컨트롤러를 거쳐서 가는 것!
+	}
+	
+	@RequestMapping("/inquiry/inquiry_reply_view")
+	public String inquiry_reply_view(@RequestParam String bid, @RequestParam @Nullable String page, 
+			@RequestParam @Nullable String search, Model model) {
+		
+		map = inquiryBoard.boardModify_view(bid, page, search);
+		model.addAttribute("map", map);
+		
+		return "/inquiry/inquiry_reply_view";
+	}
+	
+	@RequestMapping("/inquiry/reply")
+	public String inquiry_reply(inquiry_boardDto inqDto, 
+			@RequestPart MultipartFile file, 
+			@RequestParam @Nullable String page, 
+			@RequestParam @Nullable String search, Model model) throws Exception {
+		
+		
+		//URL을 통해서 보내는 검색어(search) 한글 깨짐 처리(return을 redirect로 보내기 때문)
+		search = URLEncoder.encode(search, "utf-8");
+		
+		inquiryBoard.boardReply(inqDto, file, page, search);
+		model.addAttribute("map", map);
+		
+		return "redirect:/inquiry/inquiry_main?page="+page+"&search="+search;    //redirect는 컨트롤러를 거쳐서 가는 것!
+	}
+	
+	@RequestMapping("/inquiry/inquiry_replyCheck")
+	public String inquiry_replyCheck(@RequestParam String bid, @RequestParam @Nullable String page, 
+			@RequestParam @Nullable String search, Model model) throws Exception {
+		
+		//URL을 통해서 보내는 검색어(search) 한글 깨짐 처리(return을 redirect로 보내기 때문)
+		search = URLEncoder.encode(search, "utf-8");
+
+		
+		inquiryBoard.boardReplyPointCheck(bid, page, search);
+		model.addAttribute("map", map);
+		
+		return "/inquiry/replyPointComplete";
+	}
+	
+	
 
 	
 }//class
