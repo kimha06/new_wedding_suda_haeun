@@ -48,6 +48,14 @@ public class MemberService_impl implements MemberService {
 		
 		return map;
 	}
+
+	@Override
+	public int memberUseridDoubleCheck(String userid) {
+		
+		int result = member_mapper.selectUseridDoubleCheck(userid);
+		
+		return result;
+	}
 	
 	
 	

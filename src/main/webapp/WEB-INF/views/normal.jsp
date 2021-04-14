@@ -24,7 +24,7 @@
 
 <jsp:include page="../include/header.jsp">
     <jsp:param name="category" value="product1" />
-</jsp:include>
+</jsp:include> 
 
 <div class="m_bx_wrap">
      
@@ -496,7 +496,7 @@ function noRefresh()
 
 <jsp:include page="../include/footer.jsp">
     <jsp:param name="category" value="product2" />
-</jsp:include>
+</jsp:include> 
 
 
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.site.dto.MemberDto;
 import com.site.service.MemberService;
@@ -73,10 +74,17 @@ public class MemberController {
 		return "/member/logout";
 	}
 	
-	@RequestMapping("/normal")
-	public String normal() {
-		return "/normal";
+	
+	@RequestMapping("/member/useridDoubleCheck")
+	@ResponseBody
+	public int useridDoubleCheck(@RequestParam String userid) {
+		
+		int result = memberService.memberUseridDoubleCheck(userid);
+		
+		return result;
 	}
+	
+
 	
 	
 	

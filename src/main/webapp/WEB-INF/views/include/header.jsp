@@ -185,7 +185,7 @@ function logout()
           </div>
           <div class="main_topbx_02">
           	<div class="main_menu_wrap">
-               	<div class="main_logobx"><p><a href="/"><img src="../images/main_logo.jpg" class="main_logoimg"></a></p></div>
+               	<div class="main_logobx"><p><a href="/main/main"><img src="../images/main_logo.jpg" class="main_logoimg"></a></p></div>
                     <div class="main_title_menu">
 						<a href="#"><span id="up_menu" data="01" name="up_menu_" class="">웨딩수다소개</span></a>
                         <a href="#"><span id="up_menu" data="02" name="up_menu_" class="">예약</span></a>
@@ -357,9 +357,11 @@ function logout()
                               </div>
                               <div class="MSub_bx_02">
                                    <ul>
-                                        <li><a href="/event/event_list.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">이벤트</a></li>
-                                        <li><a href="/event/special.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩 프로모션</a></li>
+                                        <li><a href="/inquiry/inquiry_main" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">지식인</a></li>
+                                       <!--  
+                                       <li><a href="/event/special.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩 프로모션</a></li>
 										<li><a href="/honeymoon/honey_sub.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">허니문 프로모션</a></li>
+										 -->
                                    </ul>
                               </div>
                               <div class="MSub_bx_03">

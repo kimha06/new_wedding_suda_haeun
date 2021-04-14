@@ -19,7 +19,7 @@
 	<div class="ft_wrap cf">
 		<div class="ft_link cf">
 			<ul>
-				<li><a href="/about/greeting.asp">왜 베리굿웨딩일까요</a></li>
+				<li><a href="/about/greeting.asp">웨딩수다 소개</a></li>
 				<li><a href="/about/info.asp">이용안내</a></li>
 				<li><a href="/about/map.asp">찾아오시는길</a></li>
 				<li><a href="/about/planner.asp">웨딩플래너</a></li>						
@@ -42,8 +42,8 @@
 			</ul>			
 			<ul>
 				
-				<li><a href="javascript:login();">로그인</a></li>
-				<li><a href="/membership/member.asp">회원가입</a></li>
+				<li><a href="/member/login">로그인</a></li>
+				<li><a href="/member/join">회원가입</a></li>
 				<li><a href="/membership/find_id.asp">ID/PW 찾기</a></li>
 								
 				<li><a href="/membership/use_it.asp">이용약관 및 정보취급</a></li>				
@@ -65,7 +65,7 @@
 <div id="copyright2">
 	<div class="copy_wrap cf">
 		<span class="copy_logo"><img src="../images/main_logo_noback.png" alt="베리굿웨딩"  style="width: 130px; height: 35px; margin-top: 10px" ></span>
-		<span class="copy_txt">웨딩수다 &nbsp;&nbsp;&nbsp;주소 : 서울특별시 구로구 구로동 182-4  &nbsp;&nbsp;&nbsp;사업자번호 : 111-11-1111 &nbsp;&nbsp;&nbsp; 대표 : 안윤선 &nbsp;&nbsp;&nbsp;&nbsp;이메일 : wedding.chatter21@gmail.com
+		<span class="copy_txt">웨딩수다 &nbsp;&nbsp;&nbsp;주소 : 서울특별시 구로구 구로동 182-4  &nbsp;&nbsp;&nbsp;사업자번호 : 111-11-1111 &nbsp;&nbsp;&nbsp; 팀원 : 안윤선/설재호/이경무/김하은 &nbsp;&nbsp;&nbsp;&nbsp;
 		<br>
 		Copyright © 웨딩수다 All Right Reserved.
 		</span>
