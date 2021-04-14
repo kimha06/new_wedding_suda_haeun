@@ -173,7 +173,7 @@ function logout()
                 		<c:otherwise>
                 			<span>${session_userid}</span>
 							<span>|</span>
-	                   		<span><a href="#">회원정보수정</a></span>
+	                   		<span><a href="/member/userInfoModify_pwdCheck">회원정보수정</a></span>
 							<span>|</span>
 							<span><a href="/member/logout">로그아웃</a></span>
                 		

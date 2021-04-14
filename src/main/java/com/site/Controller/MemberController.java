@@ -1,5 +1,6 @@
 package com.site.Controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -84,7 +85,23 @@ public class MemberController {
 		return result;
 	}
 	
-
+	@RequestMapping("/member/userInfoModify_pwdCheck")
+	public String userInfoModify_pwdCheck() {
+		return "/member/userInfoModify_pwdCheck";
+	}
+	
+	@RequestMapping("/member/useridModify_view")
+	public String useridModify_view(MemberDto memberDto, Model model) {
+		
+		MemberDto resultDto = memberService.useridModify_view(memberDto);
+		model.addAttribute("resultDto", resultDto);
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("resultDto", resultDto);
+		
+		return "/member/useridModify_view";
+	}
+	
+	
 	
 	
 	

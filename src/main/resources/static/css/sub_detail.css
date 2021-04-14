@@ -11,6 +11,7 @@ body, textarea {font-family: 'NanumBarunGothic';}
 	#input_design_login_wrap>li{float:left}
 	#input_design_login_wrap a{cursor:pointer;}
 	.login_input_design{width:297px; height:30px; line-height:30px; background:#ededed; border:1px solid #d4d4d4; float:left; margin-bottom:7px;}
+	.modify_input_design{width:297px; height:30px; line-height:30px; float:left; margin-bottom:7px; border:none;border-right:0px; border-top:0px; boder-left:0px; boder-bottom:0px; font-weight:900;}
 	.log_in_btn_login{width:112px; height:77px; color:#FFF; font-size: 16px;  background:#404040; border:0; float:right; cursor:pointer; position:absolute; top:0; right:0;}
 	.log_in_btn_login:hover{background:#7c71bf;}
 	.log_in_save{ clear:both; float:left; margin-top:9px;}

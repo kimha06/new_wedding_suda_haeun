@@ -23,5 +23,10 @@
   	 select count(*) from ws_member where userid=#{userid}
   </select>
   
+      <!-- 회원정보수정 - 비밀번호 확인 -->
+  <select id="selectUseridModify_view" resultType="com.site.dto.MemberDto">
+  	 select * from ws_member where userid=#{userid} and pwd=#{pwd}
+  </select>
+  
   
 </mapper>

@@ -56,6 +56,14 @@ public class MemberService_impl implements MemberService {
 		
 		return result;
 	}
+
+	@Override
+	public MemberDto useridModify_view(MemberDto memberDto) {
+		
+		MemberDto resultDto = member_mapper.selectUseridModify_view(memberDto);
+		
+		return resultDto;
+	}
 	
 	
 	

@@ -14,7 +14,7 @@
 			<c:otherwise>
 				<script type="text/javascript">
 					alert('로그인 성공!');
-					location.href="../inquiry/inquiry_main";
+					location.href="../main/main";
 				</script>
 			</c:otherwise>
 		</c:choose>
