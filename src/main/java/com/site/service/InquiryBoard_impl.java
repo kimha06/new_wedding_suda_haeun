@@ -25,7 +25,7 @@ public class InquiryBoard_impl implements InquiryBoard {
 	@Autowired
 	Inquiry_mapper inquiry_mapper;
 	@Autowired
-	PageNumber pageNumber;
+	Inquiry_PageNumber pageNumber;
 	
 	//변수선언
 	List<inquiry_boardDto> list;

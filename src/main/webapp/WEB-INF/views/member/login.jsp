@@ -263,7 +263,7 @@
             <ul>
             	<form id="log_login_page02" method="post">
                 <li style="color:#5c5b5b;">로그인 정보를 잊어버리셨나요? <input class="login_find" id="logpwd_find" type="button" alt="정보찾기" value="아이디 / 비밀번호 찾기"></li>
-                <li style="color:#5c5b5b;">아직 온라인 회원이 아니신가요?<input class="login_online" id="register" type="button" alt="회원가입" value="온라인 회원가입"></li>
+                <li style="color:#5c5b5b;">아직 온라인 회원이 아니신가요?<a href="/member/join"><input class="login_online" id="register" type="button" alt="회원가입" value="온라인 회원가입"></a></li>
             	</form>
             </ul>
     </div>

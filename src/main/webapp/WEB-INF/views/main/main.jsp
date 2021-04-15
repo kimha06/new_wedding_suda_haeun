@@ -603,7 +603,7 @@ function exec_pop_up(idx, view_sep, cook_term, width, height, postion_top, posti
 <!--페이백웨딩 이벤트 영역 시작-->
 	<div class="PB_wrap">
      	<div class="m_cost_title">
-               <h1 class="m_cost02">베리굿웨딩 이벤트</h1>
+               <h1 class="m_cost02">웨딩수다 이벤트</h1>
                <h3 class="m_cost03">지금 바로! 진행중인 이벤트로 더 특별한 결혼준비를 시작해보세요!</h3>
      	</div>
         <div class="PB_bx02">

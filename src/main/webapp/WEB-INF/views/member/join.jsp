@@ -19,6 +19,10 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 </head>
 <body>
+<c:choose>
+	<c:when test="${session_flag eq 'fail' || session_flag eq null}">
+	
+	
 <div class="wrap">
 <!-- 헤더 너을거임  -->
 
@@ -1255,4 +1259,15 @@ $(document).ready(function() {
 
 
 
-</div></div></body></html>
+</div></div>
+	</c:when>
+	<c:otherwise>
+		<script type="text/javascript">
+			alert('이미 가입한 회원입니다.');
+			location.href='../main/main';
+		</script>
+	</c:otherwise>
+</c:choose>
+
+
+</body></html>
