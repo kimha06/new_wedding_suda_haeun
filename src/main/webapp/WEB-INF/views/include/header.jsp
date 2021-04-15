@@ -170,7 +170,7 @@ function logout()
 							<span>|</span>
 							<span><a href="/member/join">회원가입</a></span>
 							<span>|</span>
-							<span><a href="/member/join">관리자페이지</a></span>
+							<span><a href="/admin/admin_login">관리자페이지</a></span>
                 		</c:when>
                 		<c:otherwise>
                 			<span>${session_userid}</span>
