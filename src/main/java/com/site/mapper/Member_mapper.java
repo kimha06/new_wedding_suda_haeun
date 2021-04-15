@@ -11,6 +11,7 @@ public interface Member_mapper {
 	MemberDto selectMemberLogin(String userid, String pwd);   //로그인 체크
 	int selectUseridDoubleCheck(String userid);   //아이디 중복검사
 	MemberDto selectUseridModify_view(MemberDto memberDto);   //회원정보수정 - 비밀번호 확인
+	int updateMemberModify(MemberDto memberDto);   //회원정보수정
 
 	
 	

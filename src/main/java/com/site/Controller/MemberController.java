@@ -95,12 +95,20 @@ public class MemberController {
 		
 		MemberDto resultDto = memberService.useridModify_view(memberDto);
 		model.addAttribute("resultDto", resultDto);
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("resultDto", resultDto);
 		
 		return "/member/useridModify_view";
 	}
 	
+	
+	@RequestMapping("/member/modifyCheck")
+	public String modifyCheck(@Nullable MemberDto memberDto, Model model) {
+		
+		int check = memberService.memberModify(memberDto);
+		System.out.println("con, check : "+check);
+		model.addAttribute("check", check);
+		
+		return "/member/modifyCheck";
+	}
 	
 	
 	

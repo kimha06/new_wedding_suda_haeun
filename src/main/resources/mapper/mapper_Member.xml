@@ -28,5 +28,14 @@
   	 select * from ws_member where userid=#{userid} and pwd=#{pwd}
   </select>
   
+  	<!-- 회원정보수정 -->
+  <update id="updateMemberModify">
+	update ws_member set name=#{name}, sex=#{sex}, nickName=#{nickName},
+	pwd=#{pwd}, mobile=#{mobile}, email=#{email}, cusEnter=#{cusEnter},
+	chuchon=#{chuchon}, businessTy=#{businessTy}, com_name=#{com_name},
+	com_tel=#{com_tel}, sdong=#{sdong}
+	where userid=#{userid}
+  </update>
+  
   
 </mapper>

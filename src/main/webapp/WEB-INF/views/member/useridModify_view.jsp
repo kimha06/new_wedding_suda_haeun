@@ -298,21 +298,21 @@ $(document).ready(function() {
 	});
 
 	$('#submit').click(function() {		
-		var userid = $('#userid').val();		
+		/* var userid = $('#userid').val();		
 		if (!userid || userid.length < 6 || userid.length > 15)
 		{
 			alert("아이디를 정확히 입력해 주십시오.\n\n아이디는 6~15자까지 허용됩니다. \n\n한글아이디는 사용금지입니다.");
 			$('#userid').val('');
 			$('#userid').focus();
 			return;
-		}
+		} */
 		//아이디 중복검사 시작//
-		var useridClick = $('#useridClick').val();
+		/* var useridClick = $('#useridClick').val();
 		if (!useridClick || useridClick == "N")
 		{
 			alert("아이디 중복검사를 해주세요!");        
 			return;
-		}
+		} */
 		//아이디 중복검사 끝//
 		var name = $('#name').val();
 		if (!name)
@@ -442,13 +442,11 @@ $(document).ready(function() {
 		
  		
 		//로그인 확인 클릭		
-		$('#member_box').submit();		
+		$('#modify_box').submit();		
 	});
 });
 
 //아이디 중복확인  
-// 아이디 중복(input hidden) ==>id,  useridClick
-//중복확인 버튼 id,  join_id_btn
 $(function(){
 
 	$("#join_id_btn").click(function(){
@@ -538,7 +536,7 @@ function noRefresh()
     </div>
 </div>
 <div id="member_wrap">
-	<form name="member_box" id="member_box" method="post" action="/member/joinCheck">
+	<form name="modify_box" id="modify_box" method="post" action="/member/modifyCheck">
 	<input type="hidden" name="useridClick" id="useridClick">  <!-- 아이디 중복검사 클릭 시 Y 저장됨 -->
 	<input type="hidden" name="phoneClick" id="phoneClick">   
 	<div class="member_form">
@@ -547,6 +545,7 @@ function noRefresh()
 				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon.png">&nbsp;&nbsp;아이디</span>
 				<div class="value_m">
 					${resultDto.userid}
+					<input type="hidden" name="userid" value="${resultDto.userid}">
 				</div>
 			</li>	
 			<li class="member_box_li_selet">
@@ -598,22 +597,28 @@ function noRefresh()
 					<select name="phone1" id="phone1" class="phone_select" style="width:90px;font-size:23px;float:left;margin-right:3px;" value="">
 						<c:choose>
 							<c:when test="${fn:substring(tel,0,3) eq '010'}">
-								<option value="010">010</option>
+								<option value="010" selected="selected">010</option><option value="011">011</option><option value="016">016</option>
+								<option value="017">017</option><option value="018">018</option><option value="019">019</option>
 							</c:when>
 							<c:when test="${fn:substring(tel,0,3) eq '011'}">
-								<option value="011">011</option>
+								<option value="010">010</option><option value="011" selected="selected">011</option><option value="016">016</option>
+								<option value="017">017</option><option value="018">018</option><option value="019">019</option>
 							</c:when>
 							<c:when test="${fn:substring(tel,0,3) eq '016'}">
-								<option value="016">016</option>
+								<option value="010">010</option><option value="011">011</option><option value="016" selected="selected">016</option>
+								<option value="017">017</option><option value="018">018</option><option value="019">019</option>
 							</c:when>
 							<c:when test="${fn:substring(tel,0,3) eq '017'}">
-								<option value="017">017</option>
+								<option value="010">010</option><option value="011">011</option><option value="016">016</option>
+								<option value="017" selected="selected">017</option><option value="018">018</option><option value="019">019</option>
 							</c:when>
 							<c:when test="${fn:substring(tel,0,3) eq '018'}">
-								<option value="018">018</option>
+								<option value="010">010</option><option value="011">011</option><option value="016">016</option>
+								<option value="017">017</option><option value="018" selected="selected">018</option><option value="019">019</option>
 							</c:when>
 							<c:when test="${fn:substring(tel,0,3) eq '019'}">
-								<option value="019">019</option>
+								<option value="010">010</option><option value="011">011</option><option value="016">016</option>
+								<option value="017">017</option><option value="018">018</option><option value="019" selected="selected">019</option>
 							</c:when>							
 						</c:choose>
 					</select>
@@ -661,30 +666,39 @@ function noRefresh()
 			<li class="member_box_li_selet">
 				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png" align="absmiddle">&nbsp;&nbsp;결혼예정일</span>
 				<div class="value_m">
-					<input type="date" name="cusEnter" id="cusEnter" class="member_input_email hasDatepicker" style="width:150px;cursor:pointer;padding-left:5px;font-size:15px;color:#000000;">
+					${resultDto.cusEnter}&nbsp;&nbsp;<input type="date" name="cusEnter" id="cusEnter" class="member_input_email hasDatepicker" style="width:150px;cursor:pointer;padding-left:5px;font-size:15px;color:#000000;">
 				</div>
 			</li>
 			<li class="member_box_li_selet">
 				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;추천인</span>
 				<div class="value_m">
-					<input type="text" name="chuchon" id="chuchon" class="member_input_email" style="width:120px;padding-left:5px;font-size:15px;color:#000000;"> 
+					<input type="text" name="chuchon" id="chuchon" class="member_input_email" style="width:120px;padding-left:5px;font-size:15px;color:#000000;" value="${resultDto.chuchon}"> 
 				</div>			
 			</li>
 			
 			<li class="member_box_li_selet">
 				<span class="member_title_m" style="font-size:16px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;&nbsp;가입유형</span>
 				<div class="value_radio" style="line-height:35px;">
-					<label id="radio_text" style="font-size:15px;"><input type="radio" name="businessTy" id="general" class="raido_click" value="general" onchange="setDisplay()" checked>일반회원</label>
-					<label id="radio_text" style="font-size:15px;">
-					<input type="radio" name="businessTy" id="company" class="raido_click" value="company" onchange="setDisplay()" style="font-size:15px;line-height:25px;color:#000000;">기업회원&nbsp;(※업체명, 대표번호 입력필수)</label>	
+						<c:choose>
+							<c:when test="${resultDto.businessTy eq 'general'}">
+								<label id="radio_text" style="font-size:15px;">
+								<input type="radio" name="businessTy" id="general" class="raido_click" value="general" onchange="setDisplay()" checked>일반회원</label>
+								<label id="radio_text" style="font-size:15px;">
+								<input type="radio" name="businessTy" id="company" class="raido_click" value="company" onchange="setDisplay()" style="font-size:15px;line-height:25px;color:#000000;">기업회원&nbsp;(※업체명, 대표번호 입력필수)</label>	
+							</c:when>
+							<c:otherwise>
+								<label id="radio_text" style="font-size:15px;">
+								<input type="radio" name="businessTy" id="general" class="raido_click" value="general" onchange="setDisplay()">일반회원</label>
+								<label id="radio_text" style="font-size:15px;">
+								<input type="radio" name="businessTy" id="company" class="raido_click" value="company" onchange="setDisplay()" style="font-size:15px;line-height:25px;color:#000000;" checked>기업회원&nbsp;(※업체명, 대표번호 입력필수)</label>	
+							</c:otherwise>
+						</c:choose>
 				</div>
 			</li>
-			
-			
 			<li class="member_box_li_selet">
 				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;업체명</span>
 				<div class="value_m">
-					<input type="text" name="com_name" id="com_name" class="member_input_email" style="width:180px;padding-left:5px;font-size:15px;color:#000000;">  &nbsp;(한글+영문 최대20자)
+					<input type="text" name="com_name" id="com_name" class="member_input_email" style="width:180px;padding-left:5px;font-size:15px;color:#000000;" value="${resultDto.com_name}">  &nbsp;(한글+영문 최대20자)
 				</div>			
 			</li>
 			
@@ -692,25 +706,127 @@ function noRefresh()
 				<span class="member_title_m" style="font-size:17px;"><img src="../images/member_icon03.png">&nbsp;&nbsp;업체 대표번호</span>
 				<div class="value_selet02">
 					<select name="com_tel1" id="com_tel1" class="phone_select" style="width:90px;font-size:23px;float:left;margin-right:3px;">
-						<option value="02" selected="selected">02</option>
-						<option value="031">031</option>
-						<option value="032">032</option>
-						<option value="033">033</option>
-						<option value="041">041</option>
-						<option value="042">042</option>
-						<option value="043">043</option>
-						<option value="051">051</option>
-						<option value="052">052</option>
-						<option value="053">053</option>
-						<option value="054">054</option>
-						<option value="055">055</option>
-						<option value="061">061</option>
-						<option value="062">062</option>
-						<option value="063">063</option>
-						<option value="064">064</option>
-						<option value="070">070</option>
+						
+						
+						<c:set var="com_tel" value="${resultDto.com_tel}" />
+						<c:forEach var="com_tel" items="${fn:split(com_tel, '-') }" varStatus="s">
+							<c:if test="${s.count == 1}">
+								<c:set var="DB_com_tel1" value="${com_tel}" />
+							</c:if>
+							<c:if test="${s.count == 2}">
+								<c:set var="DB_com_tel2" value="${com_tel}" />
+							</c:if>
+							<c:if test="${s.count == 3}">
+								<c:set var="DB_com_tel3" value="${com_tel}" />
+							</c:if>
+						</c:forEach>
+					
+						<c:choose>
+							<c:when test="${DB_com_tel1 eq '02'}">
+								<option value="02" selected="selected">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '031'}">
+								<option value="02">02</option><option value="031" selected="selected">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '032'}">
+								<option value="02">02</option><option value="031">031</option><option value="032" selected="selected">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '033'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033" selected="selected">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '041'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041" selected="selected">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '042'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042" selected="selected">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '043'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043" selected="selected">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '051'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051" selected="selected">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '052'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052" selected="selected">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '053'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053" selected="selected">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '054'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054" selected="selected">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '055'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055" selected="selected">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '061'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061" selected="selected">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '062'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062" selected="selected">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '063'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063" selected="selected">063</option>
+								<option value="064">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '064'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064" selected="selected">064</option><option value="070">070</option>
+							</c:when>
+							<c:when test="${DB_com_tel1 eq '070'}">
+								<option value="02">02</option><option value="031">031</option><option value="032">032</option><option value="033">033</option><option value="041">041</option>
+								<option value="042">042</option><option value="043">043</option><option value="051">051</option><option value="052">052</option><option value="053">053</option>
+								<option value="054">054</option><option value="055">055</option><option value="061">061</option><option value="062">062</option><option value="063">063</option>
+								<option value="064">064</option><option value="070" selected="selected">070</option>
+							</c:when>
+						</c:choose>
 					</select>
-					<span class="idpw_textspan2">-</span><input name="com_tel2" type="text" class="member_input_tel" id="com_tel2" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"><span class="idpw_textspan2">-</span><input name="com_tel3" type="text" class="member_input_tel" id="com_tel3" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"> <a id="phone_auth" style="cursor:pointer;"></a>
+					<span class="idpw_textspan2">-</span><input name="com_tel2" type="text" class="member_input_tel" id="com_tel2" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;" value="${DB_com_tel2}"><span class="idpw_textspan2">-</span><input name="com_tel3" value="${DB_com_tel3}" type="text" class="member_input_tel" id="com_tel3" maxlength="4" style="padding-left:5px;font-size:15px;color:#000000;"> <a id="phone_auth" style="cursor:pointer;"></a>
 					<input type="hidden" name="com_tel" id="com_tel" value="">       
 				</div>			
 			</li>
@@ -741,7 +857,7 @@ function noRefresh()
     <div class="member_button_area">
 		<span class="lineup">
 			<span class="button_pack">
-				<span class="btn_input"><button type="button" id="submit" class="btn_lg_color" onclick="joinCheck()" style="cursor:pointer;font-size:18px;font-weight:bold;">확인</button></span>
+				<span class="btn_input"><button type="button" id="submit" class="btn_lg_color" onclick="modifyCheck()" style="cursor:pointer;font-size:18px;font-weight:bold;">정보수정</button></span>
 				<span class="btn_input"><button type="reset" id="reset" class="btn_lg_color02" style="cursor:pointer;font-size:18px;">취소</button></span>
 			</span>
         </span>

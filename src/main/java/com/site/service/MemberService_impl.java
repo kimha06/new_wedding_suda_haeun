@@ -64,6 +64,14 @@ public class MemberService_impl implements MemberService {
 		
 		return resultDto;
 	}
+
+	@Override
+	public int memberModify(MemberDto memberDto) {
+		
+		int check = member_mapper.updateMemberModify(memberDto);
+		
+		return check;
+	}
 	
 	
 	
