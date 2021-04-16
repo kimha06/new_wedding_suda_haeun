@@ -29,7 +29,7 @@
 <div class="m_bx_wrap">
      
 	<script type="text/javascript" src="/js/jssor.slider.min.js"></script>
-	<script type="text/javascript">
+<!-- 	<script type="text/javascript">
         jssor_1_slider_init = function() {            
             var jssor_1_SlideshowTransitions = [
               {$Duration:1200,$Opacity:2}
@@ -69,7 +69,7 @@
             $Jssor$.$AddEvent(window, "resize", ScaleSlider);
             $Jssor$.$AddEvent(window, "orientationchange", ScaleSlider);           
         };
-    </script>	
+    </script>	 -->
 	<style>		
 		.jssorb05{position:absolute}.jssorb05 div,.jssorb05 div:hover,.jssorb05 
 		
@@ -117,7 +117,7 @@
     </div>
 </div>
 <script language="javascript">
-$(document).ready(function() {	
+/* $(document).ready(function() {	
 	$('#userid').focus();
 	
 	$("#password").keydown(function(e){
@@ -142,9 +142,9 @@ $(document).ready(function() {
 	$('#register').click(function() {
 		top.location.href = "member.asp";		
 	});	
-});
+}); */
 
-function loginSubmit()
+/* function loginSubmit()
 {	
 	userid = $('#userid').val();
 	if (!userid)
@@ -162,7 +162,7 @@ function loginSubmit()
 	}	
 	$.ajax({
 		type:"post"
-		, url:"login_ok.asp"			
+		, url:"./login_ok"			
 		, data:{userid: userid, password: password}	
 		, success: function(html) {			
 			var html_arry = html.split("㉬");
@@ -194,21 +194,65 @@ function loginSubmit()
 		}
 		, error: function(xhr, status, error)
 		  {
-			alert("로그인하는 과정에서 오류가 발생하였습니다!");
+			alert("아이디 또는 비밀번호가 다릅니다.");
 		  }	
 	});	
-}
+} */
+
+
 </script>
+
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+       function loginCheck(){
+    	   
+    		if (!$('#userid').val())
+    		{
+    			alert("아이디를 입력하세요!");
+    			$('#userid').focus();
+    			return;
+    		}
+    		if (!$('#pwd').val())
+    		{
+    			alert("비밀번호를 입력하세요!");
+    			$('#pwd').focus();
+    			return;
+    		}
+    	   
+    		alert($('#userid').val());
+    		document.formlogin.submit();
+    		
+    	   /* $.ajax({
+			   url:"/member/loginCheck",
+			   type:"post",
+			   data:{
+				   "userid":$("#userid").val(),"pwd":$("#pwd").val()
+			   },
+			   contentType:"application/json",
+			   success:function(data){
+				   if(data.loginCheck==1){
+					   location.href="../info/studio_list";
+				   }else{
+					   alert(data.message);
+				   }
+			   },
+			   error:function(){
+				   alert("에러");
+			   }
+		   }); */
+       }
+    
+    </script>
 <div class="log_in_wrap">
-    <form name="formlogin" method="post">	     
+    <form name="formlogin" method="post" action="/member/loginCheck">	     
         <div class="log_form_box">
             <div id="contain03_text">
             <span class="title" id="log_in_title">Member Login</span>
             </div>
                 <ul id="input_design_login_wrap">
                     <li><input type="text" name="userid" id="userid" class="login_input_design" style="padding-left:5px;"></li>
-                    <li><input type="password" name="password" id="password" class="login_input_design" style="padding-left:5px;"></li>
-                    <input type="button" class="log_in_btn_login" value="LOGIN" id="btn_submit">                 
+                    <li><input type="password" name="pwd" id="pwd" class="login_input_design" style="padding-left:5px;"></li>
+                    <input type="button" class="log_in_btn_login" value="LOGIN" id="btn_submit" onclick="loginCheck()">                 
                </ul>			
         </div>
     </form>
@@ -219,7 +263,7 @@ function loginSubmit()
             <ul>
             	<form id="log_login_page02" method="post">
                 <li style="color:#5c5b5b;">로그인 정보를 잊어버리셨나요? <input class="login_find" id="logpwd_find" type="button" alt="정보찾기" value="아이디 / 비밀번호 찾기"></li>
-                <li style="color:#5c5b5b;">아직 온라인 회원이 아니신가요?<input class="login_online" id="register" type="button" alt="회원가입" value="온라인 회원가입"></li>
+                <li style="color:#5c5b5b;">아직 온라인 회원이 아니신가요?<a href="/member/join"><input class="login_online" id="register" type="button" alt="회원가입" value="온라인 회원가입"></a></li>
             	</form>
             </ul>
     </div>
@@ -229,67 +273,6 @@ function loginSubmit()
 </div>
 
 
-<script language="JavaScript" type="text/JavaScript">
-$(document).ready(function() {
-	var userAgent = navigator.userAgent.toLowerCase();
-	var machine = "";
-	var agent = "";
-	
-	if(userAgent.match('iphone')) 
-	{
-		 machine = "아이폰";
-		 agent = "1"
-	} 
-	else if(userAgent.match('ipad')) 
-	{
-	   machine = "아이패드";
-	   agent = "1"
-	} 
-	else if(userAgent.match('ipod')) 
-	{
-		machine = "아이팟";
-		agent = "1"
-	} 
-	else if(userAgent.match('android')) 
-	{
-		machine = "안드로이드";
-		agent = "1"
-	}
-	else if(userAgent.match('blackberry')) 
-	{
-		machine = "블랙베리";
-		agent = "1"
-	}
-	else if(userAgent.match('LG')) 
-	{
-		machine = "LG";
-		agent = "1"
-	}
-	else if(userAgent.match('MOT')) 
-	{
-		machine = "모토로라";
-		agent = "1"
-	}
-	else if(userAgent.match('SAMSUNG')) 
-	{
-		machine = "SAMSUNG";
-		agent = "1"
-	}
-	else if(userAgent.match('SonyEricsson')) 
-	{
-		machine = "소니에릭손";
-		agent = "1"
-	}
-	if (agent == "1")
-	{
-		$("#mobile_view").show();
-	}
-	
-	$("#mobile_view").click(function() {
-		top.location.href="/mobile";
-	});
-});
-</script>
 <div id="mobile_view" style="font-size:4em;font-weight:bold;text-align:center;height:110px;line-height:110px;display:none;">모바일로 보기</div>
 <!--//footer 끝-->
 

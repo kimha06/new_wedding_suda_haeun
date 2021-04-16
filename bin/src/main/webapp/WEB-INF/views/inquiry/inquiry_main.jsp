@@ -19,6 +19,9 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 </head>
 <body>
+<c:choose>
+	<c:when test="${session_flag eq 'success'}">
+
 <div class="wrap">
 <!-- 헤더 너을거임  -->
 
@@ -89,7 +92,7 @@
 
 <div class="sub_link_box">
 	<div class="sub_link_menu">
-		<span id="sub_Color_f" class="sub_under_bar"><a href="/noticeboard/notice_list">지식인</a></span>
+		<span id="sub_Color_f" class="sub_under_bar"><a href="./inquiry_main">지식인</a></span>
         <!-- 
         <span id="sub_Color_f"><a href="/noticeboard/board_list">문의게시판</a></span>
 		<span id="sub_Color_f"><a href="/noticeboard/after_list">웨딩후기</a></span>
@@ -124,8 +127,16 @@
 		<c:forEach var="dto" items="${map.list}">
      
 			<tr>
-				<td style="font-size:14px;">${dto.bid}</td>        
-				<td class="title"><a href="./inquiry_content_view?bid=${dto.bid}&page=${map.page}&search=${map.search}" class="view_article" style="font-size:14px;">${dto.btitle}</a>  &nbsp;&nbsp;<img src="../images/icon_new.gif" width="52" height="18" alt="NEW" title="NEW" border="0" align="absmiddle" class="ICON_NEW"> 
+				<td style="font-size:14px;">${dto.bid}</td>
+				<td class="title">
+				<span>
+				<c:forEach begin="1" end="${dto.bindent}">
+					└─&nbsp;Re:&nbsp;
+				</c:forEach> 
+				</span>
+				
+				<span><a href="./inquiry_content_view?bid=${dto.bid}&page=${map.page}&search=${map.search}" class="view_article" style="font-size:14px; float:none;">${dto.btitle}</a></span>
+               	
                </td>        
                <td style="font-size:14px;">${dto.userid}</td>
                <td style="font-size:14px;">${dto.bdate}</td>
@@ -211,4 +222,13 @@
 
 
 
-</div></div></body></html>
+</div></div>
+	</c:when>
+	<c:otherwise>
+		<script type="text/javascript">
+			alert('로그인 후 이용해 주시기 바랍니다!');
+			location.href='/member/login';
+		</script>
+	</c:otherwise>
+</c:choose>
+</body></html>

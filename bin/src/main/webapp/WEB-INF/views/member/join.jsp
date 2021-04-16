@@ -19,6 +19,10 @@
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 </head>
 <body>
+<c:choose>
+	<c:when test="${session_flag eq 'fail' || session_flag eq null}">
+	
+	
 <div class="wrap">
 <!-- 헤더 너을거임  -->
 
@@ -124,7 +128,7 @@ $(document).ready(function() {
 			$('#userid').focus();
 			return false;	
 		}
-		$.ajax({
+		/* $.ajax({
 			type:"post"
 			, url:"member_id.asp"
 			, data:{userid: userid}				
@@ -150,7 +154,7 @@ $(document).ready(function() {
 			  {
 				alert(error);				
 			  }	
-		});			
+		}); */ 			
 		return false;
 	});
 
@@ -298,12 +302,12 @@ $(document).ready(function() {
 			return;
 		}
 		//아이디 중복검사 시작//
-		/* var useridClick = $('#useridClick').val();
+		var useridClick = $('#useridClick').val();
 		if (!useridClick || useridClick == "N")
 		{
 			alert("아이디 중복검사를 해주세요!");        
 			return;
-		} */
+		}
 		//아이디 중복검사 끝//
 		var name = $('#name').val();
 		if (!name)
@@ -429,11 +433,49 @@ $(document).ready(function() {
 			return false;
 		}		
 		//$('#member_box').attr("action","member_access.asp");
+		
+		
  		
 		//로그인 확인 클릭		
 		$('#member_box').submit();		
 	});
 });
+
+//아이디 중복확인  
+// 아이디 중복(input hidden) ==>id,  useridClick
+//중복확인 버튼 id,  join_id_btn
+$(function(){
+
+	$("#join_id_btn").click(function(){
+		
+		$.ajax({
+			url:"/member/useridDoubleCheck",
+			type:"post",
+			data:{	"userid": $("#userid").val() },
+			success:function(data){   
+				if(parseInt(data) == 1){
+					alert("이미 사용중인 아이디입니다.");
+				}else {
+					alert("사용가능한 아이디입니다.");
+					$('#useridClick').val("Y");
+				}
+				
+			},
+			error:function(){
+				alert("에러");
+			} 
+			
+			
+		});//ajax
+		
+	});//jQuery - 아이디 중복버튼 클릭시
+		
+	
+	
+});//jQuery
+
+
+
 
 function checkNumber(val)
 {
@@ -492,7 +534,7 @@ function noRefresh()
 </div>
 <div id="member_wrap">
 	<form name="member_box" id="member_box" method="post" action="/member/joinCheck">
-	<input type="hidden" name="useridClick" id="useridClick">
+	<input type="hidden" name="useridClick" id="useridClick">  <!-- 아이디 중복검사 클릭 시 Y 저장됨 -->
 	<input type="hidden" name="phoneClick" id="phoneClick">   
 	<div class="member_form">
 		<ul>
@@ -1217,4 +1259,15 @@ $(document).ready(function() {
 
 
 
-</div></div></body></html>
+</div></div>
+	</c:when>
+	<c:otherwise>
+		<script type="text/javascript">
+			alert('이미 가입한 회원입니다.');
+			location.href='../main/main';
+		</script>
+	</c:otherwise>
+</c:choose>
+
+
+</body></html>

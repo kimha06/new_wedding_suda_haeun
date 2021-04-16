@@ -18,6 +18,35 @@
 <script language="javascript" src="/js/jquery-ui-1.10.4.custom.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script type="text/javascript" src="/js/ckeditor/ckeditor.js"></script>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+	function writeCheck(){
+		
+		if($("#btitle").val() == ""){
+			alert("제목을 입력하세요!");
+			$("#btitle").focus();
+			return false;
+		}
+		
+		if($("#name").val() == ""){
+			alert("이름을 입력하세요!");
+			$("#name").focus();
+			return false;
+		}
+		
+		if(CKEDITOR.instances.bcontent1.getData() == '' || CKEDITOR.instances.bcontent1.getData().length == 0){
+			alert("내용을 입력해 주세요!");
+			$("#bcontent1").focus();
+			return false;
+		}
+		
+		var content_data = CKEDITOR.instances.bcontent1.getData(); 
+		document.getElementById('bcontent').value = content_data;
+				
+		document.writeForm.submit();
+		
+	}//writeCheck()
+</script>
 </head>
 <body>
 <div class="wrap">
@@ -105,7 +134,7 @@
 
 
 <div id="online_write_wrap">    
-	<form name="online_write_box" id="online_write_box" method="post" action="./write" enctype="multipart/form-data">
+	<form name="writeForm" id="writeForm" method="post" action="./writeCheck" enctype="multipart/form-data">
 	<!-- 
 	<input type="hidden" id="mode" name="mode" value="write">
 	<input type="hidden" id="idx" name="idx" value="">
@@ -121,7 +150,7 @@
             </li>                
             <li class="box_li">
 				<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;이름</span>
-                <div class="value"><input type="text" name="name" id="name" class="online_write_input02" value="" style="padding-left:5px;color:#000000;"></div>
+                <div class="value"><input type="text" name="userid" id="userid" class="online_write_input02" value="${session_userid}" style="padding-left:5px;color:#000000;" readonly="readonly"></div>
             </li>	
             <li class="box_li line2">
 				<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;파일첨부</span>
@@ -170,11 +199,13 @@ Trex.Tool.Test = Trex.Class.create
 //동영상기능추가
 //-->
 </script>
-<textarea name="content" id="content" style="display:none;" row="100px"></textarea>
+<input type="text" name="bcontent1" id="bcontent1" style="display:none;" row="100px">
+<!-- <textarea name="bcontent" id="bcontent" style="display:none;" row="100px" value="안녕하세요"></textarea> -->
 	<!-- 에디터 추가 -->
 <script type="text/javascript">
- CKEDITOR.replace('content', {height: 500});
+ CKEDITOR.replace('bcontent1', {height: 500});
 </script>
+<input type="hidden" name="bcontent" id="bcontent" value="">
 <div id="tx_trex_container" name="tx_trex_container">
 <div class="body">
 
@@ -221,14 +252,14 @@ Trex.Tool.Test = Trex.Class.create
 		*/
 	};
 
-	EditorJSLoader.ready
+	/* EditorJSLoader.ready
 	(
 		function(Editor) 
 		{
 			var editor = new Editor(config);
 			
 		}
-	);
+	); */
 	
 </script>
 
@@ -410,7 +441,7 @@ Trex.Tool.Test = Trex.Class.create
     <div class="online_write_button">
 		<span class="online_center">
 			<span class="button_pack">
-                <span class="btn_input"><button type="button" class="online_lg_color" id="regist_btn" style="cursor:pointer;font-family: NanumBarunGothic;">저장하기</button></span>
+                <span class="btn_input"><button type="button" class="online_lg_color" id="regist_btn" style="cursor:pointer;font-family: NanumBarunGothic;" onclick="writeCheck()">저장하기</button></span>
                 <span class="btn_input"><button type="button" class="online_lg_color02" id="link_btn" data="pageNo=&amp;search=&amp;keyword=" style="cursor:pointer;font-family: NanumBarunGothic;"><a href="./inquiry_main?page=${map.maxPage}&search=${map.search}">목록으로</a></button></span>
             </span>
         </span>

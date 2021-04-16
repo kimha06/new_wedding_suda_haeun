@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="/WEB-INF/views/include/header.jsp" %> --%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -163,23 +164,37 @@ function logout()
                     <span><img src="/images/m_blog.jpg"></span>
                 </div>
                 <div class="main_favor_inbx">
-                    <span><a href="/member/login">로그인</a></span>
-						<span>|</span>
-						<span><a href="/member/join">회원가입</a></span>
+                	<c:choose>
+                		<c:when test="${session_flag eq null || session_flag eq 'fail'}">
+	                   		<span><a href="/member/login">로그인</a></span>
+							<span>|</span>
+							<span><a href="/member/join">회원가입</a></span>
+							<span>|</span>
+							<span><a href="/admin/admin_login">관리자페이지</a></span>
+                		</c:when>
+                		<c:otherwise>
+                			<span>${session_userid}</span>
+							<span>|</span>
+	                   		<span><a href="/member/userInfoModify_pwdCheck">회원정보수정</a></span>
+							<span>|</span>
+							<span><a href="/member/logout">로그아웃</a></span>
+                		
+                		</c:otherwise>
+                	</c:choose>
 					
 				</div>
 			</div>
           </div>
           <div class="main_topbx_02">
           	<div class="main_menu_wrap">
-               	<div class="main_logobx"><p><a href="/"><img src="../images/main_logo.jpg" class="main_logoimg"></a></p></div>
+               	<div class="main_logobx"><p><a href="/main/main"><img src="../images/main_logo.jpg" class="main_logoimg"></a></p></div>
                     <div class="main_title_menu">
-						<a href="#"><span id="up_menu" data="01" name="up_menu_" class="">웨딩수다소개</span></a>
-                        <a href="#"><span id="up_menu" data="02" name="up_menu_" class="">예약</span></a>
-                        <a href="#"><span id="up_menu" data="03" name="up_menu_" class="">정보</span></a>
-                        <a href="/information/info_main"><span id="up_menu" data="04" name="up_menu_" class="">지식인</span></a>
-                        <a href="#"><span id="up_menu" data="05" name="up_menu_" class="">상품권교환</span></a>
-                        <a href="#"><span id="up_menu" data="06" class="M_ttl_menu">커뮤니티</span></a>
+						<a href=""><span id="up_menu" data="01" name="up_menu_" class="">웨딩수다소개</span></a>
+                        <a href=""><span id="up_menu" data="02" name="up_menu_" class="">예약</span></a>
+                        <a href=""><span id="up_menu" data="03" name="up_menu_" class="">정보</span></a>
+                        <a href="/inquiry/inquiry_main"><span id="up_menu" data="04" name="up_menu_" class="">지식인</span></a>
+                        <a href=""><span id="up_menu" data="05" name="up_menu_" class="">상품권교환</span></a>
+                        <a href=""><span id="up_menu" data="06" class="M_ttl_menu">커뮤니티</span></a>
                     </div>
                </div>
           </div>
@@ -191,15 +206,15 @@ function logout()
                               <a><span id="all_menu" data="0">전체메뉴</span></a>
                          </div>
                          <div class="m_weddinghall">
-                         	<a href="/about/info.asp"><span>웨딩서비스</span></a>
+                         	<a href=""><span>웨딩서비스</span></a>
                          </div>
                          <div class="m_sdm">
-                         	<a href="/gallary/gallary_list.asp?data=72"><!--<span class="M_Sub_ttl">//--><span>스튜디오</span></a>
-                            <a href="/gallary/gallary_index.asp?data=71"><span>드레스</span></a>
-                            <a href="/gallary/gallary_index.asp?data=73"><span>헤어메이크업</span></a>
-                            <a href="/gallary/gallary_list.asp?data=72&amp;data2=76"><span>본식사진</span></a>
+                         	<a href="/info/studio_list"><!--<span class="M_Sub_ttl">//--><span>스튜디오</span></a>
+                            <a href="/info/dress_list"><span>드레스</span></a>
+                            <a href="/info/hairMakeUp_list"><span>헤어메이크업</span></a>
+                            <a href="/info/travel_list"><span>신혼여행</span></a>
                          </div>
-                         <div class="m_honsu">
+                        <!--  <div class="m_honsu">
                          	<a href="/gallary/gallary_etc_list.asp?data=91,147"><span>예물</span></a>
                             <a href="/gallary/gallary_etc_list.asp?data=92"><span>한복</span></a>
                             <a href="/gallary/gallary_etc_list.asp?data=93"><span>신혼여행</span></a>
@@ -211,7 +226,7 @@ function logout()
                          </div>
                          <div class="m_after">
                          	<a href="/community/after_list.asp"><span>웨딩후기</span></a>
-                         </div>
+                         </div> -->
                	</div>
                </div>
           </div>
@@ -237,10 +252,10 @@ function logout()
                               </div>
                               <div class="MSub_bx_02">
                                    <ul>
-                                        <li><a href="/about/greeting.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size: 16px;">왜 웨딩수다일까요?</a></li>
-                                        <li><a href="/about/info.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size: 16px;">웨딩서비스</a></li>
-                                        <li><a href="/about/planner.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩플래너</a></li>
-										<li><a href="/about/map.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">찾아오시는길</a></li>
+                                        <li><a href="/about/greeting" id="lay_sub_css" class="lay_sub_css_" style="font-size: 16px;">왜 웨딩수다일까요?</a></li>
+                                        <li><a href="/about/info" id="lay_sub_css" class="lay_sub_css_" style="font-size: 16px;">웨딩서비스</a></li>
+                                        <li><a href="/about/planner" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩플래너</a></li>
+										<li><a href="/about/map" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">찾아오시는길</a></li>
                                    </ul>
                               </div>
                               <div class="MSub_bx_03">
@@ -269,9 +284,9 @@ function logout()
                               </div>
                               <div class="MSub_bx_02">
                                    <ul>
-                                        <li><a href="/hall/hall_search.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩홀 검색</a></li>
-                                        <li><a href="/hall/hall_event.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩홀 이벤트</a></li>
-                                        <li><a href="/hall/hall_qa.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩홀 문의</a></li>                                        
+                                        <li><a href="/hall/hall_reservation" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">•상담신청 예약</a></li>
+                                        <li><a href="/hall/hall_search" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">•웨딩홀 검색</a></li>
+                                        <li><a href="/hall/hall_bidding_list" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">•웨딩홀 입찰</a></li>                                        
                                    </ul>
                               </div>
                               <div class="MSub_bx_03">
@@ -301,20 +316,20 @@ function logout()
                               <div class="MSub_bx_02">
                                    <ul>
                                    	<div class="MSub_bx_02_div01">
-                                        	<li style="width:115px;"><a href="/gallary/gallary_list.asp?data=72" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">스튜디오</a></li>
-                                             <li style="width:115px;"><a href="/gallary/gallary_index.asp?data=71" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">드레스</a></li>
-                                             <li style="width:115px;"><a href="/gallary/gallary_index.asp?data=73" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">헤어메이크업</a></li>
-                                             <li style="width:115px;"><a href="/gallary/gallary_list.asp?data=72&amp;data2=76" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">본식사진</a></li>
+                                        	<li style="width:115px;"><a href="/info/studio_list" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">스튜디오</a></li>
+                                             <li style="width:115px;"><a href="/info/dress_list" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">드레스</a></li>
+                                             <li style="width:115px;"><a href="/info/hairMakeUp_list" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">헤어메이크업</a></li>
+                                            <!--  <li style="width:115px;"><a href="/gallary/gallary_list.asp?data=72&amp;data2=76" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">본식사진</a></li>
                                              <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=97,214" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">폐백/이바지</a></li>
-                                             <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=100" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">DVD/영상</a></li>
+                                             <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=100" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">DVD/영상</a></li> -->
                                         </div>
                                         <div class="MSub_bx_02_div02">
-                                        	<li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=93" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">신혼여행</a></li>
-                                             <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=91,147" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">예물</a></li>
+                                        	<li style="width:115px;"><a href="/info/travel_list" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">신혼여행</a></li>
+                                             <!-- <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=91,147" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">예물</a></li>
                                              <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=92" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">한복</a></li>
                                              <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=98" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">예복</a></li>
                                              <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=101,102,157" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">혼수/가구/가전</a></li>
-											 <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=94,95,96" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">주례/사회/축가</a></li>
+											 <li style="width:115px;"><a href="/gallary/gallary_etc_list.asp?data=94,95,96" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">주례/사회/축가</a></li> -->
                                         </div>                                        
                                    </ul>
                               </div>
@@ -344,9 +359,11 @@ function logout()
                               </div>
                               <div class="MSub_bx_02">
                                    <ul>
-                                        <li><a href="/event/event_list.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">이벤트</a></li>
-                                        <li><a href="/event/special.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩 프로모션</a></li>
+                                        <li><a href="/inquiry/inquiry_main" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">지식인</a></li>
+                                       <!--  
+                                       <li><a href="/event/special.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩 프로모션</a></li>
 										<li><a href="/honeymoon/honey_sub.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">허니문 프로모션</a></li>
+										 -->
                                    </ul>
                               </div>
                               <div class="MSub_bx_03">
