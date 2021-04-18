@@ -28,6 +28,8 @@ public interface Inquiry_mapper {
 	inquiry_boardDto selectFindSameBgroup(int bgroup);   //답변채택 버튼 노출조건 관련
 	int updateReplyPointPlus(String bid);   //답변 채택 시 포인트 +100 처리
 	void updateReplyCheck(String bid);  //답변 채택 완료되어 ws_inquiry_board의 replycheck값을 1로 변경
+	void updateBoardClickCheck(int bid);   //새글 알림용
+	int selectBoardClickCount();   //inquiry_main 헤더 새글 알림용
 
 	
 	

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.site.dto.inquiry_boardDto;
 import com.site.service.InquiryBoard;
+import com.site.service.Inquiry_PageNumber;
 
 @Controller
 public class InquiryController {
@@ -37,6 +38,7 @@ public class InquiryController {
 			@RequestParam @Nullable String search, Model model) {
 		
 		map = inquiryBoard.boardListAll(page, search);
+		
 		model.addAttribute("map", map);
 		
 		return "/inquiry/inquiry_main";

@@ -62,8 +62,16 @@ public class InquiryBoard_impl implements InquiryBoard {
 		}//if
 		
 		
+		//user가 클릭한 튜플의 개수를 확인한다.(inquiry_main 헤더 새글 알림용)
+		int clickCount = inquiry_mapper.selectBoardClickCount();
+		
+		
 		//메소드 호출 - 페이지 넘버링 계산
 		map = pageNumber.pageNumber(page, limit, search);
+		
+		
+		//map에 답기
+		map.put("clickCount", clickCount);
 		map.put("list", list);
 		
 		
@@ -124,6 +132,23 @@ public class InquiryBoard_impl implements InquiryBoard {
 		//현재의 contentView의 bgroup 값과 모두 같은 튜플중에서 bindent가 0인 튜플의 userid값을 찾는다.
 		//찾은 그 값을 map에 담는다.
 		inquiry_boardDto result_dto = inquiry_mapper.selectFindSameBgroup(dto.getBgroup());
+		
+		
+		//새글 알림 처리
+		//원글 작성자(즉, result_dto의 userid)의 bgroup 값이 같으면서 clickcheck=0이면(0의 의미는 클릭안함)
+		//매개변수로 넘어온 bid의 clickcheck=1로 만든다.(1의 의미는 클릭함)
+		int group_dto = dto.getBgroup();   //현재 글의 bgroup
+		int group_resultDto = result_dto.getBgroup();   //원글의 bgroup
+		
+		
+		if(group_dto == group_resultDto && dto.getClickcheck() == 0) {
+			inquiry_mapper.updateBoardClickCheck(dto.getBid());
+			dto.setClickcheck(1);
+		}
+
+		
+		
+		
 		
 		
 		//table join을 이용하여 이름 확인하기

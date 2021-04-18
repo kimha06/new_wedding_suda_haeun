@@ -15,6 +15,7 @@ public class inquiry_boardDto {
 	private int bhit;
 	private int bstep;
 	private int replycheck;
+	private int clickcheck;
 	private String userid;  //ws_member 외래키로 처리 
 	private String name;    //join, ws_member
 	private String nickName;  //join, ws_member

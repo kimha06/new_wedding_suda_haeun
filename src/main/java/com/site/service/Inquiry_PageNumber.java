@@ -57,6 +57,8 @@ public class Inquiry_PageNumber {
 		return map;
 	}
 
+
+
 	
 	
 	
