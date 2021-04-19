@@ -4,6 +4,7 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,9 +123,10 @@ public class InfoController {
 	}
 	
 	@RequestMapping("/info/question_contentView")
-	public String question_contentView(@RequestParam String bid, @RequestParam @Nullable String page, @RequestParam @Nullable String search, Model model) {
+	public String question_contentView(@RequestParam String bid, @RequestParam @Nullable String page, @RequestParam @Nullable String search, 
+			HttpServletRequest request,HttpServletResponse response ,Model model) {
 		
-		map = infoService.QuestionContent_view(bid,page,search);
+		map = infoService.QuestionContent_view(bid,page,search,request,response);
 		
 		model.addAttribute("map", map);
 		
@@ -318,7 +320,7 @@ public class InfoController {
 	
 	@RequestMapping("/info/question_replyView")
 	public String question_replyView(@RequestParam String bid, HttpServletRequest request, @RequestParam @Nullable String page, 
-			@RequestParam @Nullable String search, Model model) {
+			@RequestParam @Nullable String search,@RequestPart MultipartFile file ,Model model) {
 		System.out.println("bid : "+bid);
 		HttpSession session = request.getSession();
 		if(session.getAttribute("session_flag") != null && session.getAttribute("session_flag").equals("success")) {

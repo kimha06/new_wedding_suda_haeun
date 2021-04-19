@@ -8,8 +8,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -89,13 +94,13 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public Map<String, Object> StudioWrite(StudiocompanyInfoDto stuDto,@RequestPart MultipartFile file) {
+	public Map<String, Object> StudioWrite(StudiocompanyInfoDto stuDto, @RequestPart MultipartFile file) {
 
 		String orgfileName = file.getOriginalFilename();
 		System.out.println("impl : " + orgfileName);
 		if (file.getSize() != 0) { // 파일사이즈가 0이 아니면
 			// 파일 저장 위치
-			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+			String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 																										// 파일이
 																										// 저장됨
 			// 신규파일이름 ( 32자리이름생성.확장자명 )
@@ -115,7 +120,7 @@ public class InfoServiceImpl implements InfoService {
 		}
 
 		System.out.println("파일 : " + stuDto.getC_fileName());
-		
+
 		// mapper전달
 		infoMapper.insertStudioWrite(stuDto);
 		return map;
@@ -137,13 +142,13 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public Map<String, Object> StudioModify(StudiocompanyInfoDto stuDto, @RequestPart MultipartFile file) {
 
-		System.out.println("파일 이름 impl : "+stuDto.getC_fileName());
+		System.out.println("파일 이름 impl : " + stuDto.getC_fileName());
 		// 원본파일이름
 		if (file.getSize() != 0) { // 파일사이즈가 0이 아니면
 			String orgfileName = file.getOriginalFilename();
 			System.out.println("impl : " + orgfileName);
 			// 파일 저장 위치
-			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+			String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 																										// 파일이
 																										// 저장됨
 			// 신규파일이름 ( 32자리이름생성.확장자명 )
@@ -163,11 +168,11 @@ public class InfoServiceImpl implements InfoService {
 		}
 
 		int ModifyCheck = infoMapper.updateStudioModify(stuDto);
-		System.out.println("스튜디오 infoId : "+stuDto.getInfoId());
-		System.out.println("스튜디오 ModifyCheck : "+ModifyCheck);
+		System.out.println("스튜디오 infoId : " + stuDto.getInfoId());
+		System.out.println("스튜디오 ModifyCheck : " + ModifyCheck);
 
 		map.put("ModifyCheck", ModifyCheck);
-		
+
 		return map;
 	}
 
@@ -250,7 +255,7 @@ public class InfoServiceImpl implements InfoService {
 		String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
 		if (FilenameUtils.getExtension(fileName).toLowerCase() != "") {
 			// 파일 저장 위치
-			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+			String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 																										// 파일이 저장됨
 			// 신규파일이름 ( 32자리이름생성.확장자명 )
 			String uploadFileName = RandomStringUtils.randomAlphanumeric(32) + "." + fileNameExtension;
@@ -292,15 +297,15 @@ public class InfoServiceImpl implements InfoService {
 	public Map<String, Object> DressModify(DresscompanyInfoDto dreDto, MultipartFile file) {
 
 		System.out.println("modify impl");
-		System.out.println("modify impl infoId : "+dreDto.getInfoId());
+		System.out.println("modify impl infoId : " + dreDto.getInfoId());
 		// 원본파일이름
 		String orgfileName = file.getOriginalFilename();
 		System.out.println("impl : " + orgfileName);
 		if (file.getSize() != 0) { // 파일사이즈가 0이 아니면
 			// 파일 저장 위치
-			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
-																									// 파일이
-																									// 저장됨
+			String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+																										// 파일이
+																										// 저장됨
 			// 신규파일이름 ( 32자리이름생성.확장자명 )
 			// 이름에 시간추가
 			long time = System.currentTimeMillis();
@@ -395,8 +400,8 @@ public class InfoServiceImpl implements InfoService {
 		String fileNameExtension = FilenameUtils.getExtension(fileName).toLowerCase();
 		if (FilenameUtils.getExtension(fileName).toLowerCase() != "") {
 			// 파일 저장 위치
-			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
-																									// 파일이 저장됨
+			String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+																										// 파일이 저장됨
 			// 신규파일이름 ( 32자리이름생성.확장자명 )
 			String uploadFileName = RandomStringUtils.randomAlphanumeric(32) + "." + fileNameExtension;
 			File f = new File(fileUrl + uploadFileName);
@@ -434,15 +439,15 @@ public class InfoServiceImpl implements InfoService {
 
 	@Override
 	public Map<String, Object> HmModify(HMcompanyInfoDto hmDto, MultipartFile file) {
-		
-		System.out.println("impl infoId : "+hmDto.getInfoId());
+
+		System.out.println("impl infoId : " + hmDto.getInfoId());
 		// 원본파일이름
 		if (file.getSize() != 0) { // 파일사이즈가 0이 아니면
 			String orgfileName = file.getOriginalFilename();
 			System.out.println("impl : " + orgfileName);
 			// 파일 저장 위치
-			String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
-																									// 저장됨
+			String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+																										// 저장됨
 			// 신규파일이름 ( 32자리이름생성.확장자명 )
 			// 이름에 시간추가
 			long time = System.currentTimeMillis();
@@ -457,7 +462,7 @@ public class InfoServiceImpl implements InfoService {
 			hmDto.setC_fileName(uploadFileName);
 		} else {
 			// 기존 파일이름을 그대로 저장시키면 됨.
-			
+
 		}
 
 		int ModifyCheck = infoMapper.updateHmModify(hmDto);
@@ -484,8 +489,8 @@ public class InfoServiceImpl implements InfoService {
 
 		list4 = new ArrayList<TravelcompanyInfoDto>();
 
-		//이 글을 올린 사람의 아이디와 현재 세션에 저장된 아이디를 비교
-		
+		// 이 글을 올린 사람의 아이디와 현재 세션에 저장된 아이디를 비교
+
 		int page = 1; // 첫페이지 초기화
 		int limit = 9; // 한 페이지에 나오는 게시글 수 : 9
 
@@ -505,7 +510,6 @@ public class InfoServiceImpl implements InfoService {
 
 		map.put("list", list4);
 
-		
 		return map;
 	}
 
@@ -513,20 +517,20 @@ public class InfoServiceImpl implements InfoService {
 	public Map<String, Object> TravelWrite_view(String userid) {
 
 		map = new HashMap<String, Object>();
-		
+
 		MemberDto memberDto = infoMapper.selectWriteView(userid);
-		System.out.println("작성자 이름 : "+memberDto.getCom_name());
+		System.out.println("작성자 이름 : " + memberDto.getCom_name());
 
 		map.put("memberDto", memberDto);
-		
+
 		return map;
 	}
 
 	@Override
 	public Map<String, Object> TravelWrite(TravelcompanyInfoDto traDto, MultipartFile file1, MultipartFile file2) {
 
-		System.out.println("userid : "+traDto.getUserid());
-		String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+		System.out.println("userid : " + traDto.getUserid());
+		String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 
 		// 원본파일이름
 		String fileName1 = file1.getOriginalFilename();
@@ -579,7 +583,7 @@ public class InfoServiceImpl implements InfoService {
 	public Map<String, Object> TravelModifyView(String infoId, String page, String search) {
 
 		traDto = infoMapper.selectTravelModifyView(infoId);
-		System.out.println("업체명 : "+traDto.getCom_name());
+		System.out.println("업체명 : " + traDto.getCom_name());
 		System.out.println("대표이미지 : " + traDto.getC_image());
 
 		map.put("traDto", traDto);
@@ -593,7 +597,7 @@ public class InfoServiceImpl implements InfoService {
 	public Map<String, Object> TravelModify(TravelcompanyInfoDto traDto, MultipartFile file1, MultipartFile file2) {
 
 		// 파일 저장 위치
-		String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+		String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 		long time = System.currentTimeMillis(); // (이름에 시간추가) 하기 위해 선언
 		// 원본파일이름
 		String orgfileName1 = file1.getOriginalFilename();
@@ -672,12 +676,36 @@ public class InfoServiceImpl implements InfoService {
 		return map;
 
 	}
-	
-	@Override
-	public Map<String, Object> QuestionContent_view(String bid, String page, String search) {
 
-		//컨텐츠뷰 클릭시 조회수 증가
-		infoMapper.updateQuestionUpHit(bid);
+	@Override
+	public Map<String, Object> QuestionContent_view(String bid, String page, String search, HttpServletRequest request, HttpServletResponse response) {
+
+		//새로고침 조회수 증가 막기 처리- 쿠키이용
+		//https://syaku.tistory.com/275 참고
+		//저장된 쿠키 불러오기
+		Cookie cookies[] = request.getCookies();
+		Map mapCookie = new HashMap<String, Object>();
+		if(request.getCookies() != null) {
+			for(int i=0; i<cookies.length; i++) {
+				Cookie obj = cookies[i];
+				mapCookie.put(obj.getName(), obj.getValue());
+			}//for
+		}//if
+				
+		//저장된 쿠키중에 read_count만 불러오기
+		String cookie_read_count = (String) mapCookie.get("read_count");
+		//저장될 새로운 쿠키값 생성
+		String new_cookie_read_count = "|" + bid;
+				
+		//저장된 쿠키에 새로운 쿠키값이 존재하는지 검사
+		if(StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1) {
+		//없을 경우 쿠키 생성
+			Cookie cookie = new Cookie("read_count", cookie_read_count+new_cookie_read_count);
+			response.addCookie(cookie);
+			//컨텐츠뷰 클릭시 조회수 증가
+			infoMapper.updateQuestionUpHit(bid);
+		}
+		
 		
 		//이전글,다음글
 		if(search == null || search == "") {
@@ -689,8 +717,6 @@ public class InfoServiceImpl implements InfoService {
 		}
 		
 		queDto = infoMapper.selectQuestionContentView(bid);
-		
-		
 		
 
 		map.put("preDto", preDto);
@@ -709,7 +735,7 @@ public class InfoServiceImpl implements InfoService {
 		MemberDto memberDto = infoMapper.selectWriteView(userid);
 
 		map.put("memberDto", memberDto);
-		
+
 		return map;
 	}
 
@@ -717,7 +743,7 @@ public class InfoServiceImpl implements InfoService {
 	public Map<String, Object> QuestionWrite(questionBoardDto queDto, MultipartFile file) {
 
 		// 파일 저장 위치
-		String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+		String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 		long time = System.currentTimeMillis(); // (이름에 시간추가) 하기 위해 선언
 		// 원본파일이름
 		String orgfileName = file.getOriginalFilename();
@@ -736,8 +762,6 @@ public class InfoServiceImpl implements InfoService {
 		} else {
 			queDto.setFileName("");
 		}
-		
-		
 
 		int writeCheck = infoMapper.insertQuestionWrite(queDto);
 
@@ -745,7 +769,6 @@ public class InfoServiceImpl implements InfoService {
 
 		return map;
 	}
-
 
 	@Override
 	public Map<String, Object> QuestionModifyView(String bid, String page, String search) {
@@ -755,8 +778,8 @@ public class InfoServiceImpl implements InfoService {
 		map.put("queDto", queDto);
 		map.put("page", page);
 		map.put("search", search);
-		
-		System.out.println("bid : "+queDto.getBid());
+
+		System.out.println("bid : " + queDto.getBid());
 
 		return map;
 	}
@@ -765,7 +788,7 @@ public class InfoServiceImpl implements InfoService {
 	public Map<String, Object> QuestionModify(questionBoardDto queDto, MultipartFile file) {
 
 		// 파일 저장 위치
-		String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
+		String fileUrl = "C:/Users/User/git/new_wedding_suda3/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 		long time = System.currentTimeMillis(); // (이름에 시간추가) 하기 위해 선언
 		// 원본파일이름
 		String orgfileName = file.getOriginalFilename();
@@ -792,22 +815,22 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public Map<String, Object> QuestionDelete(String bid,String page,String search) {
-		
+	public Map<String, Object> QuestionDelete(String bid, String page, String search) {
+
 		infoMapper.deleteQuestionDelete(bid);
 		map.put("page", page);
 		map.put("search", search);
-		
+
 		return map;
-		
+
 	}
 
 	@Override
 	public Map<String, Object> QuestionReply(questionBoardDto queDto, String page, String search) {
-		
+
 		int replyCheck = infoMapper.insertQuestionReply(queDto);
 		map.put("replyCheck", replyCheck);
-		
+
 		return map;
 	}
 

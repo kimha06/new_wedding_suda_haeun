@@ -2,6 +2,9 @@ package com.site.service;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -73,7 +76,7 @@ public interface InfoService {
 
 	Map<String, Object> QuestionWrite(questionBoardDto queDto, MultipartFile file);
 
-	Map<String, Object> QuestionContent_view(String bid, String page, String search);
+	Map<String, Object> QuestionContent_view(String bid, String page, String search,HttpServletRequest request, HttpServletResponse response);
 
 	Map<String, Object> QuestionModifyView(String bid, String page, String search);
 

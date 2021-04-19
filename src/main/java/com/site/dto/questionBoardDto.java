@@ -13,7 +13,6 @@ public class questionBoardDto {
 
 	private int bid;
 	private String bname;
-	private String bcategory;
 	private String btitle;
 	private String bcontent;
 	private Timestamp bdate;
