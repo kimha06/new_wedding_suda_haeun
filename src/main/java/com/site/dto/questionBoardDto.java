@@ -22,5 +22,6 @@ public class questionBoardDto {
 	private int bstep;
 	private int bindent;
 	private String fileName;
+	private String userid;
 	
 }

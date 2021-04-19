@@ -41,6 +41,8 @@ public class InfoServiceImpl implements InfoService {
 	HMcompanyInfoDto hmDto;
 	TravelcompanyInfoDto traDto;
 	questionBoardDto queDto;
+	questionBoardDto preDto;
+	questionBoardDto nextDto;
 	@Autowired
 	Info_PageNumber pageNumber;
 
@@ -503,6 +505,7 @@ public class InfoServiceImpl implements InfoService {
 
 		map.put("list", list4);
 
+		
 		return map;
 	}
 
@@ -522,6 +525,7 @@ public class InfoServiceImpl implements InfoService {
 	@Override
 	public Map<String, Object> TravelWrite(TravelcompanyInfoDto traDto, MultipartFile file1, MultipartFile file2) {
 
+		System.out.println("userid : "+traDto.getUserid());
 		String fileUrl = "C:/Users/User/git/new_wedding_suda/src/main/resources/static/upload/"; // 끝에 /붙여주기 그래야 밑에
 
 		// 원본파일이름
@@ -675,8 +679,23 @@ public class InfoServiceImpl implements InfoService {
 		//컨텐츠뷰 클릭시 조회수 증가
 		infoMapper.updateQuestionUpHit(bid);
 		
+		//이전글,다음글
+		if(search == null || search == "") {
+			preDto = infoMapper.selectQuestionPreView(bid);
+			nextDto = infoMapper.selectQuestionNextView(bid); 
+		}else {
+			preDto = infoMapper.selectQuestionPreViewSearch(bid,search);
+			nextDto = infoMapper.selectQuestionNextViewSearch(bid,search); 
+		}
+		
 		queDto = infoMapper.selectQuestionContentView(bid);
+		
+		
+		
 
+		map.put("preDto", preDto);
+		map.put("nextDto", nextDto);
+		
 		map.put("queDto", queDto);
 		map.put("page", page);
 		map.put("search", search);
@@ -773,9 +792,13 @@ public class InfoServiceImpl implements InfoService {
 	}
 
 	@Override
-	public void QuestionDelete(String bid) {
+	public Map<String, Object> QuestionDelete(String bid,String page,String search) {
 		
 		infoMapper.deleteQuestionDelete(bid);
+		map.put("page", page);
+		map.put("search", search);
+		
+		return map;
 		
 	}
 

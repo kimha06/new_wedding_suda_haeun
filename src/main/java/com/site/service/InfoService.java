@@ -79,7 +79,7 @@ public interface InfoService {
 
 	Map<String, Object> QuestionModify(questionBoardDto queDto, MultipartFile file);
 
-	void QuestionDelete(String bid);
+	Map<String, Object> QuestionDelete(String bid, String page, String search);
 
 	Map<String, Object> QuestionReply(questionBoardDto queDto, String page, String search);                         
    

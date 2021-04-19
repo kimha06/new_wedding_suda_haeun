@@ -473,10 +473,10 @@ public class InfoController {
 	}
 	
 	@RequestMapping("/info/question_delete")
-	public String question_delete(@RequestParam String bid) {
+	public String question_delete(@RequestParam String bid,@RequestParam String page, @RequestParam String search) {
 		
 		System.out.println("삭제 bid : "+bid);
-		infoService.QuestionDelete(bid);
+		infoService.QuestionDelete(bid,page,search);
 		
 		return "redirect:/info/question_list";
 	}

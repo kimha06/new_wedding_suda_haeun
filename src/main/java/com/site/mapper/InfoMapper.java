@@ -81,34 +81,40 @@ public interface InfoMapper {
 	//헤어메이크업 상품 삭제
 	void deleteHmDelete(String infoId);
 	
-	//허니문 리스트가져오기(허니문은 검색없음)
+	//신혼여행 리스트가져오기(허니문은 검색없음)
 	List<TravelcompanyInfoDto> selectTravelListAll(int startrow, int endrow);
 	
-	//허니문 리스트 개수 가져오기
+	//신혼여행 리스트 개수 가져오기
 	int TravelListCount();
 	
-	//허니문 상품 게시글 등록(write)
+	//신혼여행 상품 게시글 등록(write)
 	int insertTravelWrite(TravelcompanyInfoDto traDto);
 	
-	//허니문 상품 게시글 수정(modify)
+	//신혼여행 상품 게시글 수정(modify)
 	TravelcompanyInfoDto selectTravelModifyView(String infoId); 
 	int updateTravelModify(TravelcompanyInfoDto traDto); 
 	
-	//허니문 상품 삭제
+	//신혼여행 상품 삭제
 	void deleteTravelDelete(String infoId); 
 	
-	//웨딩홀/허니문 문의게시판 리스트 가져오기
+	//신혼여행 문의게시판 리스트 가져오기
 	List<questionBoardDto> selectQuestionListAll(int startrow, int endrow);
 	List<questionBoardDto> selectQuestionListSearch(int startrow, int endrow, String search);
 	
 	
-	//[ 웨딩홀/허니문 ] 문의게시판 리스트 개수 가져오기(얘네는 pageNumber에서 들어옴)
+	//신혼여행 문의게시판 리스트 개수 가져오기(얘네는 pageNumber에서 들어옴)
 	int QuestionListCount();
 	int QuestionListCountSearch(String search);
 	
-	//문의게시판 컨텐츠보기 (컨텐츠 클릭할 경우 조회수 증가)
+	//문의게시판 컨텐츠보기 (컨텐츠 클릭할 경우 조회수 증가,이전글,다음글)
 	void updateQuestionUpHit(String bid);   
-	questionBoardDto selectQuestionContentView(String bid);  
+	questionBoardDto selectQuestionContentView(String bid); 
+	
+	questionBoardDto selectQuestionPreView(String bid);  
+	questionBoardDto selectQuestionNextView(String bid); 
+	//문의게시판에서 검색하고 그 컨텐츠뷰를 들어온 경우
+	questionBoardDto selectQuestionPreViewSearch(String bid, String search);
+	questionBoardDto selectQuestionNextViewSearch(String bid, String search);
 	
 	//문의게시판 글쓰기(write)
 	int insertQuestionWrite(questionBoardDto queDto);
@@ -121,7 +127,7 @@ public interface InfoMapper {
 	void deleteQuestionDelete(String bid);
 	
 	//문의게시판 답글달기
-	int insertQuestionReply(questionBoardDto queDto); 
+	int insertQuestionReply(questionBoardDto queDto);
 	
 	
 	

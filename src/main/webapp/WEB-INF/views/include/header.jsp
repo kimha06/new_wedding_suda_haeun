@@ -431,7 +431,7 @@ function logout()
                               <div class="MSub_bx_02">
                                    <ul>
                                         <li><a href="/community/notice_list.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">공지사항</a></li>
-                                        <li><a href="/community/board_list.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">문의게시판</a></li>
+                                        <li><a href="../info/question_list" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">문의게시판</a></li>
                                         <li><a href="/community/after_list.asp" id="lay_sub_css" class="lay_sub_css_" style="font-size:16px;">웨딩후기</a></li>
                                    </ul>
                               </div>
