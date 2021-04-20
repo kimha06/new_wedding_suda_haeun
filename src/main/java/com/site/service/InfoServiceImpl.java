@@ -718,7 +718,6 @@ public class InfoServiceImpl implements InfoService {
 		
 		queDto = infoMapper.selectQuestionContentView(bid);
 		
-
 		map.put("preDto", preDto);
 		map.put("nextDto", nextDto);
 		
