@@ -370,9 +370,9 @@ $('#file').change(function(evt) {
 
 <div class="sub_link_box">
 	<div class="sub_link_menu">
-		<span id="sub_Color_f"><a href="/info/studio_writeView">스튜디오</a></span>
-		<span id="sub_Color_f" class="sub_under_bar"><a href="/info/dress_writeView">드레스</a></span>
-        <span id="sub_Color_f"><a href="/info/hairMakeUp_writeView">헤어메이크업</a></span>
+		<span id="sub_Color_f"><a href="/info/studio_list">스튜디오</a></span>
+		<span id="sub_Color_f" class="sub_under_bar"><a href="/info/dress_list">드레스</a></span>
+        <span id="sub_Color_f"><a href="/info/hairMakeUp_list">헤어메이크업</a></span>
 		<span id="sub_Color_f"><a href="./travel_list">신혼여행</a></span>
     </div>
 </div>
