@@ -70,11 +70,7 @@
 		// FormData 객체 생성
 		var formData = new FormData(form);  //대신 밑에 formData에 넣어줌
 	
-		if($('#bcategory').val()=="") {
-			alert('문의하실 분야를 선택해주세요.(웨딩홀/허니문)');
-			$("#bcategory").focus();
-			return false;
-		}
+		
 		if($('#btitle').val()=="") {
 			alert('제목을 입력해주세요.');
 			$("#btitle").focus();
@@ -88,9 +84,6 @@
 			return false;
 		}
 		
-		var str = $('#bcontent').val();
-	      str = str.replace(/(?:\r\n|\r|\n)/g, '<br>');
-	      $('#bcontent').val(str);
 		
 	      document.online_write_box.submit();
 	      

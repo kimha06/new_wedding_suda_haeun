@@ -493,7 +493,7 @@ cursor
 		        <li class="box_li" style="padding-left: 40px; ">
 		        	<span class="online_write_title"><img src="../images/member_icon.png">&nbsp;&nbsp;&nbsp;업체 소개 : </span>
 		        	<div class="online_write_title">
-		        	<span style="position:absolute ; height: 200px; text-align: center;">${fn:replace(map.stuDto.content,br,cn)}</span>
+		        		<span style="text-align: center;">${map.stuDto.content}</span>
 		        	</div>
 		        </li>
 		         <li class="box_li" style="padding-left: 40px; ">
