@@ -22,5 +22,6 @@ public class questionBoardDto {
 	private int bindent;
 	private String fileName;
 	private String userid;
+	private String check_userid;
 	
 }

@@ -351,6 +351,7 @@ $(document).ready(function() {
    <form name="online_write_box" id="online_write_box" method="post" action="./question_write" enctype="multipart/form-data">
    <input type="hidden" name="userid" id="userid" value="${userMap.memberDto.userid }">
    <input type="hidden" name="com_tel" id="com_tel" value="${userMap.memberDto.com_tel }">
+   <input type="hidden" name="check_userid" id="check_userid" value="${userMap.memberDto.userid }">
    
    <div class="online_Awrite_form">
       <ul>
